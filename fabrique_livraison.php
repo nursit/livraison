@@ -2,7 +2,7 @@
 
 /**
  *  Fichier généré par la Fabrique de plugin v5
- *   le 2015-07-09 16:30:55
+ *   le 2015-07-09 16:46:39
  *
  *  Ce fichier de sauvegarde peut servir à recréer
  *  votre plugin avec le plugin «Fabrique» qui a servi à le créer.
@@ -114,8 +114,8 @@ $data = array (
         ),
         2 => 
         array (
-          'nom' => 'Texte',
-          'champ' => 'texte',
+          'nom' => 'Descriptif',
+          'champ' => 'descriptif',
           'sql' => 'longtext NOT NULL DEFAULT \'\'',
           'caracteristiques' => 
           array (
@@ -125,7 +125,7 @@ $data = array (
           'recherche' => '',
           'saisie' => 'textarea',
           'explication' => '',
-          'saisie_options' => '',
+          'saisie_options' => 'rows=5',
         ),
         3 => 
         array (
@@ -168,7 +168,7 @@ $data = array (
             1 => 'versionne',
           ),
           'recherche' => '',
-          'saisie' => '',
+          'saisie' => 'input',
           'explication' => 'Coût forfaitaire pour la livraison, indépendant du contenu',
           'saisie_options' => '',
         ),
@@ -200,7 +200,7 @@ $data = array (
           'recherche' => '',
           'saisie' => 'textarea',
           'explication' => 'Liste des tranches de prix, une tranche par ligne, au format <tt>Poids (g)|Prix HT</tt>',
-          'saisie_options' => '',
+          'saisie_options' => 'rows=5',
         ),
         8 => 
         array (
@@ -215,7 +215,7 @@ $data = array (
           'recherche' => '',
           'saisie' => 'textarea',
           'explication' => 'Liste des tranches de prix, une tranche par ligne, au format <tt>Volume (cm3)|Prix HT</tt>',
-          'saisie_options' => '',
+          'saisie_options' => 'rows=5',
         ),
       ),
       'champ_titre' => 'titre',

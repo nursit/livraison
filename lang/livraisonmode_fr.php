@@ -11,6 +11,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// C
 	'champ_date_label' => 'Date',
+	'champ_descriptif_label' => 'Descriptif',
 	'champ_prix_forfait_ht_explication' => 'Coût forfaitaire pour la livraison, indépendant du contenu',
 	'champ_prix_forfait_ht_label' => 'Prix Forfaitaire H.T.',
 	'champ_prix_poids_ht_explication' => 'Liste des tranches de prix, une tranche par ligne, au format <tt>Poids (g)|Prix HT</tt>',
@@ -20,7 +21,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'champ_prix_volume_ht_explication' => 'Liste des tranches de prix, une tranche par ligne, au format <tt>Volume (cm3)|Prix HT</tt>',
 	'champ_prix_volume_ht_label' => 'Prix au volume H.T.',
 	'champ_taxe_label' => 'TVA applicable',
-	'champ_texte_label' => 'Texte',
 	'champ_titre_label' => 'Titre',
 	'champ_zone_explication' => 'Liste des codes pays ISO livrables par ce mode, séparés par une virgule',
 	'champ_zone_label' => 'Zone',
