@@ -4,7 +4,7 @@
 	version="1.0.0"
 	etat="dev"
 	compatibilite="[3.0.0;3.0.*]"
-	logo="prive/themes/spip/images/livraison-64.png"
+	logo="prive/themes/spip/images/livraison-32.png"
 	documentation=""
 	schema="1.0.0" 
 >
