@@ -1,0 +1,39 @@
+[(#SET{defaut_tri,#ARRAY{
+	titre,1, 
+	date,-1, 
+	id_livraisonmode,1,
+	points,-1
+}})]<B_liste_livraisonmodes>
+#ANCRE_PAGINATION
+<div class="liste-objets livraisonmodes">
+<table class='spip liste'>
+	[<caption><strong class="caption">(#ENV*{titre,#GRAND_TOTAL|singulier_ou_pluriel{livraisonmode:info_1_livraisonmode,livraisonmode:info_nb_livraisonmodes}})</strong></caption>]
+	<thead>
+		<tr class='first_row'>
+			<th class='picto' scope='col'></th>
+			<th class='statut' scope='col'>[(#TRI{statut,<span title="<:lien_trier_statut|attribut_html:>">#</span>,ajax})]</th> 
+			<th class='titre' scope='col'>[(#TRI{titre,<:livraisonmode:champ_titre_label:>,ajax})]</th>
+			<th class='date' scope='col'>[(#TRI{date,<:date:>,ajax})]</th> 
+			<th class='id' scope='col'>[(#TRI{id_livraisonmode,<:info_numero_abbreviation:>,ajax})]</th>
+		</tr>
+	</thead>
+	<tbody>
+	<BOUCLE_liste_livraisonmodes(LIVRAISONMODES){id_mot?}{id_auteur?}{where?}{statut?}{recherche?}{tri #ENV{par,num titre},#GET{defaut_tri}}{par titre}{pagination #ENV{nb,10}}>
+		<tr class='[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})]'>
+			<td class='picto'>[(#CHEMIN_IMAGE{livraisonmode-16.png}|balise_img)]</td>
+			<td class='statut'>[(#STATUT|puce_statut{livraisonmode,#ID_LIVRAISONMODE})]</td> 
+			<td class='titre principale'>[(#LOGO_LIVRAISONMODE|image_reduire{20,26})]<a href="[(#ID_LIVRAISONMODE|generer_url_entite{livraisonmode})]" title="<:info_numero_abbreviation|attribut_html:> #ID_LIVRAISONMODE">[(#RANG). ]#TITRE</a></td>
+			<td class='date secondaire'>[(#DATE|affdate_jourcourt)]</td> 
+			<td class='id'>[(#AUTORISER{modifier,livraisonmode,#ID_LIVRAISONMODE}|?{
+				<a href="[(#URL_ECRIRE{livraisonmode_edit,id_livraisonmode=#ID_LIVRAISONMODE})]">#ID_LIVRAISONMODE</a>,
+				#ID_LIVRAISONMODE
+			})]</td>
+		</tr>
+	</BOUCLE_liste_livraisonmodes>
+	</tbody>
+</table>
+[<p class='pagination'>(#PAGINATION{prive})</p>]
+</div>
+</B_liste_livraisonmodes>[
+<div class="liste-objets livraisonmodes caption-wrap"><strong class="caption">(#ENV*{sinon,''})</strong></div>
+]<//B_liste_livraisonmodes>

@@ -1,0 +1,8 @@
+#FORMULAIRE_RECHERCHE_ECRIRE{#SELF,ajax}
+<div class="nettoyeur"></div>
+
+<INCLURE{fond=prive/objets/liste/livraisonmodes, par=titre, env, ajax, sinon=<:livraisonmode:info_aucun_livraisonmode:>}>
+
+[(#AUTORISER{creer,livraisonmode})
+	[(#URL_ECRIRE{livraisonmode_edit,new=oui}|icone_verticale{<:livraisonmode:icone_creer_livraisonmode:>,livraisonmode,new,right})]
+]

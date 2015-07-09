@@ -1,0 +1,29 @@
+<paquet
+	prefix="livraison"
+	categorie="divers"
+	version="1.0.0"
+	etat="dev"
+	compatibilite="[3.0.0;3.0.*]"
+	logo="prive/themes/spip/images/livraison-64.png"
+	documentation=""
+	schema="1.0.0" 
+>
+	<!--
+		Paquet genere le 2015-07-09 15:47:36
+	-->
+
+	<nom>Livraison</nom>
+
+	<auteur lien='http://www.nursit.com/'>Cédric</auteur>
+
+	<licence>GNU/GPL</licence>
+	<necessite nom="saisies"  compatibilite="[1.24.0;]" /> 
+
+
+	<pipeline nom="autoriser" inclure="livraison_autorisations.php" /> 
+
+	<pipeline nom="declarer_tables_objets_sql" inclure="base/livraison.php" /> 
+	<pipeline nom="declarer_tables_interfaces" inclure="base/livraison.php" /> 
+
+	<menu nom="livraisonmodes" titre="livraisonmode:titre_livraisonmodes" parent="menu_edition" icone="images/livraisonmode-16.png" action="livraisonmodes" /> 
+</paquet>

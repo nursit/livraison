@@ -1,0 +1,36 @@
+<div class='formulaire_spip formulaire_editer formulaire_#FORM formulaire_#FORM-#ENV{id_livraisonmode,nouveau}'>
+	[<p class="reponse_formulaire reponse_formulaire_ok">(#ENV**{message_ok})</p>]
+	[<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
+
+	[(#ENV{editable})
+	<form method='post' action='#ENV{action}'><div>
+		#ACTION_FORMULAIRE{#ENV{action}}
+		<input type='hidden' name='id_livraisonmode' value='#ENV{id_livraisonmode}' />
+		<ul>
+
+			[(#SAISIE{input, zone,
+				label=<:livraisonmode:champ_zone_label:>,
+				explication=<:livraisonmode:champ_zone_explication:> })]
+
+			[(#SAISIE{input, taxe,
+				label=<:livraisonmode:champ_taxe_label:>})]
+
+			[(#SAISIE{input, prix_unit_ht,
+				label=<:livraisonmode:champ_prix_unit_ht_label:>,
+				explication=<:livraisonmode:champ_prix_unit_ht_explication:> })]
+
+			[(#SAISIE{textarea, prix_poids_ht,
+				label=<:livraisonmode:champ_prix_poids_ht_label:>,
+				explication=<:livraisonmode:champ_prix_poids_ht_explication:> })]
+
+			[(#SAISIE{textarea, prix_volume_ht,
+				label=<:livraisonmode:champ_prix_volume_ht_label:>,
+				explication=<:livraisonmode:champ_prix_volume_ht_explication:> })]
+
+		</ul>
+		[(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]
+		<!--extra-->
+		<p class="boutons"><input type='submit' class='submit' value='<:bouton_enregistrer:>' /></p>
+	</div></form>
+	]
+</div>

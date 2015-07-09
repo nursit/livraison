@@ -1,0 +1,46 @@
+[(#AUTORISER{voir,livraisonmode,#ID_LIVRAISONMODE}|sinon_interdire_acces)]
+<BOUCLE_livraisonmode(LIVRAISONMODES){id_livraisonmode}{statut==.*}{si #ENV{exec}|=={livraisonmode}}>
+[(#BOITE_OUVRIR{[
+	[(#AUTORISER{modifier,livraisonmode,#ID_LIVRAISONMODE})
+		[(#ID_LIVRAISONMODE|afficher_qui_edite{livraisonmode}|non)
+			[(#URL_ECRIRE{livraisonmode_edit,id_livraisonmode=#ID_LIVRAISONMODE}|icone_verticale{<:livraisonmode:icone_modifier_livraisonmode:>,livraisonmode,edit,right ajax preload})]
+		]
+		[(#ID_LIVRAISONMODE|afficher_qui_edite{livraisonmode}|oui)
+			[(#URL_ECRIRE{livraisonmode_edit,id_livraisonmode=#ID_LIVRAISONMODE}|icone_verticale{#ID_LIVRAISONMODE|afficher_qui_edite{livraisonmode},warning-24,'',right edition_deja ajax preload})]
+		]
+	]
+
+	<h1>[(#RANG). ](#TITRE|sinon{<:info_sans_titre:>})[(#CHEMIN_IMAGE{livraisonmode-24.png}|balise_img{livraisonmode,cadre-icone})]</h1>
+
+],simple fiche_objet})]
+
+<div class="ajax">
+	#FORMULAIRE_DATER{livraisonmode,#ID_LIVRAISONMODE}
+</div>
+
+<!--affiche_milieu-->
+
+<div id="wysiwyg">
+<INCLURE{fond=prive/objets/contenu/livraisonmode,id=#ID_LIVRAISONMODE,id_livraisonmode=#ID_LIVRAISONMODE,virtuel=oui,ajax=wysiwyg,wysiwyg=1}>
+</div>
+
+<div class="nettoyeur"></div>
+
+[(#AUTORISER{modifier,livraisonmode,#ID_LIVRAISONMODE})
+	[(#ID_LIVRAISONMODE|afficher_qui_edite{livraisonmode}|non)
+		[(#URL_ECRIRE{livraisonmode_edit,id_livraisonmode=#ID_LIVRAISONMODE}|icone_verticale{<:livraisonmode:icone_modifier_livraisonmode:>,livraisonmode,edit,right ajax preload})]
+	]
+	[(#ID_LIVRAISONMODE|afficher_qui_edite{livraisonmode}|oui)
+		[(#URL_ECRIRE{livraisonmode_edit,id_livraisonmode=#ID_LIVRAISONMODE}|icone_verticale{#ID_LIVRAISONMODE|afficher_qui_edite{livraisonmode},warning-24,'',right edition_deja ajax preload})]
+	]
+]
+
+#PIPELINE{afficher_complement_objet,#ARRAY{args,#ARRAY{type,livraisonmode,id,#ID_LIVRAISONMODE},data,'<div class="nettoyeur"></div>'}}
+
+#BOITE_FERMER
+[(#EVAL{_AJAX}|oui)
+	<script type="text/javascript">/*<!\\[CDATA\\[*/reloadExecPage('#ENV{exec}','#navigation,#chemin,#extra');/*\\]\\]>*/</script>
+]
+</BOUCLE_livraisonmode>
+[(#ENV**{exec}|=={livraisonmode_edit}|?{#INCLURE{fond=prive/squelettes/contenu/livraisonmode_edit,redirect='',env,retourajax=oui},#REM|sinon_interdire_acces})]
+<//B_livraisonmode>
