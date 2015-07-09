@@ -2,7 +2,7 @@
 
 /**
  *  Fichier généré par la Fabrique de plugin v5
- *   le 2015-07-09 15:47:36
+ *   le 2015-07-09 16:30:55
  *
  *  Ce fichier de sauvegarde peut servir à recréer
  *  votre plugin avec le plugin «Fabrique» qui a servi à le créer.
@@ -98,7 +98,7 @@ $data = array (
             2 => 'obligatoire',
           ),
           'recherche' => '',
-          'saisie' => '',
+          'saisie' => 'input',
           'explication' => '',
           'saisie_options' => '',
         ),
@@ -123,7 +123,7 @@ $data = array (
             1 => 'versionne',
           ),
           'recherche' => '',
-          'saisie' => '',
+          'saisie' => 'textarea',
           'explication' => '',
           'saisie_options' => '',
         ),

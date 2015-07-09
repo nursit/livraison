@@ -87,7 +87,7 @@ function formulaires_editer_livraisonmode_charger_dist($id_livraisonmode='new', 
  */
 function formulaires_editer_livraisonmode_verifier_dist($id_livraisonmode='new', $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
 
-	return formulaires_editer_objet_verifier('livraisonmode',$id_livraisonmode);
+	return formulaires_editer_objet_verifier('livraisonmode',$id_livraisonmode, array('titre'));
 
 }
 

@@ -8,6 +8,12 @@
 		<input type='hidden' name='id_livraisonmode' value='#ENV{id_livraisonmode}' />
 		<ul>
 
+			[(#SAISIE{input, titre, obligatoire=oui,
+				label=<:livraisonmode:champ_titre_label:>})]
+
+			[(#SAISIE{textarea, texte,
+				label=<:livraisonmode:champ_texte_label:>})]
+
 			[(#SAISIE{input, zone,
 				label=<:livraisonmode:champ_zone_label:>,
 				explication=<:livraisonmode:champ_zone_explication:> })]
