@@ -5,19 +5,24 @@
 	<span dir='#LANG_DIR' class='#EDIT{titre} titre'>(#TITRE)</span>
 </div>]
 
-[<div class="champ contenu_date[ (#DATE*|strlen|?{'',vide})]">
-	<label><:livraisonmode:champ_date_label:> : </label>
-	<span dir='#LANG_DIR' class='#EDIT{date} date'>(#DATE)</span>
-</div>]
-
 [<div class="champ contenu_descriptif[ (#DESCRIPTIF*|strlen|?{'',vide})]">
 	<label><:livraisonmode:champ_descriptif_label:> : </label>
 	<span dir='#LANG_DIR' class='#EDIT{descriptif} descriptif'>(#DESCRIPTIF)</span>
 </div>]
 
-[<div class="champ contenu_zone[ (#ZONE*|strlen|?{'',vide})]">
-	<label><:livraisonmode:champ_zone_label:> : </label>
-	<span dir='#LANG_DIR' class='#EDIT{zone} zone'>(#ZONE)</span>
+[<div class="champ contenu_zone_pays[ (#ZONE_PAYS*|strlen|?{'',vide})]">
+	<label><:livraisonmode:champ_zone_pays_label:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{zone_pays} zone_pays'>(#ZONE_PAYS)</span>
+</div>]
+
+[<div class="champ contenu_zone_cp[ (#ZONE_CP*|strlen|?{'',vide})]">
+	<label><:livraisonmode:champ_zone_cp_label:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{zone_cp} zone_cp'>(#ZONE_CP)</span>
+</div>]
+
+[<div class="champ contenu_zone_cp_exclus[ (#ZONE_CP_EXCLUS*|strlen|?{'',vide})]">
+	<label><:livraisonmode:champ_zone_cp_exclus_label:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{zone_cp_exclus} zone_cp_exclus'>(#ZONE_CP_EXCLUS)</span>
 </div>]
 
 [<div class="champ contenu_taxe[ (#TAXE*|strlen|?{'',vide})]">

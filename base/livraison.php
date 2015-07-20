@@ -46,9 +46,10 @@ function livraison_declarer_tables_objets_sql($tables) {
 		'field'=> array(
 			"id_livraisonmode"   => "bigint(21) NOT NULL",
 			"titre"              => "text NOT NULL DEFAULT ''",
-			"date"               => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
 			"descriptif"         => "longtext NOT NULL DEFAULT ''",
-			"zone"               => "text NOT NULL DEFAULT ''",
+			"zone_pays"          => "text NOT NULL DEFAULT ''",
+			"zone_cp"            => "text NOT NULL DEFAULT ''",
+			"zone_cp_exclus"     => "text NOT NULL DEFAULT ''",
 			"taxe"               => "varchar(25) NOT NULL DEFAULT ''",
 			"prix_forfait_ht"    => "float not null default 0",
 			"prix_unit_ht"       => "float not null default 0",
@@ -64,8 +65,8 @@ function livraison_declarer_tables_objets_sql($tables) {
 		),
 		'titre' => "titre AS titre, '' AS lang",
 		'date' => "date",
-		'champs_editables'  => array('titre', 'descriptif', 'zone', 'taxe', 'prix_forfait_ht', 'prix_unit_ht', 'prix_poids_ht', 'prix_volume_ht'),
-		'champs_versionnes' => array('titre', 'descriptif', 'zone', 'taxe', 'prix_forfait_ht', 'prix_unit_ht', 'prix_poids_ht', 'prix_volume_ht'),
+		'champs_editables'  => array('titre', 'descriptif', 'zone_pays', 'zone_cp', 'zone_cp_exclus', 'taxe', 'prix_forfait_ht', 'prix_unit_ht', 'prix_poids_ht', 'prix_volume_ht'),
+		'champs_versionnes' => array('titre', 'descriptif', 'zone_pays', 'zone_cp', 'zone_cp_exclus', 'taxe', 'prix_forfait_ht', 'prix_unit_ht', 'prix_poids_ht', 'prix_volume_ht'),
 		'rechercher_champs' => array(),
 		'tables_jointures'  => array(),
 		'statut_textes_instituer' => array(

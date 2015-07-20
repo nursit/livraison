@@ -2,7 +2,7 @@
 
 /**
  *  Fichier généré par la Fabrique de plugin v5
- *   le 2015-07-09 16:46:39
+ *   le 2015-07-20 14:14:04
  *
  *  Ce fichier de sauvegarde peut servir à recréer
  *  votre plugin avec le plugin «Fabrique» qui a servi à le créer.
@@ -104,16 +104,6 @@ $data = array (
         ),
         1 => 
         array (
-          'nom' => 'Date',
-          'champ' => 'date',
-          'sql' => 'datetime NOT NULL DEFAULT \'0000-00-00 00:00:00\'',
-          'recherche' => '',
-          'saisie' => '',
-          'explication' => '',
-          'saisie_options' => '',
-        ),
-        2 => 
-        array (
           'nom' => 'Descriptif',
           'champ' => 'descriptif',
           'sql' => 'longtext NOT NULL DEFAULT \'\'',
@@ -127,10 +117,10 @@ $data = array (
           'explication' => '',
           'saisie_options' => 'rows=5',
         ),
-        3 => 
+        2 => 
         array (
-          'nom' => 'Zone',
-          'champ' => 'zone',
+          'nom' => 'Pays livrables',
+          'champ' => 'zone_pays',
           'sql' => 'text NOT NULL DEFAULT \'\'',
           'caracteristiques' => 
           array (
@@ -142,7 +132,37 @@ $data = array (
           'explication' => 'Liste des codes pays ISO livrables par ce mode, séparés par une virgule',
           'saisie_options' => '',
         ),
+        3 => 
+        array (
+          'nom' => 'Départements livrés',
+          'champ' => 'zone_cp',
+          'sql' => 'text NOT NULL DEFAULT \'\'',
+          'caracteristiques' => 
+          array (
+            0 => 'editable',
+            1 => 'versionne',
+          ),
+          'recherche' => '',
+          'saisie' => 'input',
+          'explication' => 'Si la livraison est limitée à certains départements/états, liste des débuts de code postaux livrables par ce mode, séparés par une virgule (Ex : <tt>971,973</tt> pour limiter à la Guadeloupe et la Guyanne)',
+          'saisie_options' => '',
+        ),
         4 => 
+        array (
+          'nom' => 'Départements exclus',
+          'champ' => 'zone_cp_exclus',
+          'sql' => 'text NOT NULL DEFAULT \'\'',
+          'caracteristiques' => 
+          array (
+            0 => 'editable',
+            1 => 'versionne',
+          ),
+          'recherche' => '',
+          'saisie' => 'input',
+          'explication' => 'Si la livraison n\'est pas applicable à certains départements/états, liste des débuts de code postaux non livrables par ce mode, séparés par une virgule (Ex : <tt>971,973</tt> pour exclure la Guadeloupe et la Guyanne)',
+          'saisie_options' => '',
+        ),
+        5 => 
         array (
           'nom' => 'TVA applicable',
           'champ' => 'taxe',
@@ -157,7 +177,7 @@ $data = array (
           'explication' => '',
           'saisie_options' => '',
         ),
-        5 => 
+        6 => 
         array (
           'nom' => 'Prix Forfaitaire H.T.',
           'champ' => 'prix_forfait_ht',
@@ -172,7 +192,7 @@ $data = array (
           'explication' => 'Coût forfaitaire pour la livraison, indépendant du contenu',
           'saisie_options' => '',
         ),
-        6 => 
+        7 => 
         array (
           'nom' => 'Prix Unitaite H.T.',
           'champ' => 'prix_unit_ht',
@@ -187,7 +207,7 @@ $data = array (
           'explication' => 'Coût de la livraison par produit livré',
           'saisie_options' => '',
         ),
-        7 => 
+        8 => 
         array (
           'nom' => 'Prix au poids H.T.',
           'champ' => 'prix_poids_ht',
@@ -202,7 +222,7 @@ $data = array (
           'explication' => 'Liste des tranches de prix, une tranche par ligne, au format <tt>Poids (g)|Prix HT</tt>',
           'saisie_options' => 'rows=5',
         ),
-        8 => 
+        9 => 
         array (
           'nom' => 'Prix au volume H.T.',
           'champ' => 'prix_volume_ht',

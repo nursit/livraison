@@ -10,7 +10,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'ajouter_lien_livraisonmode' => 'Ajouter ce mode de livraison',
 
 	// C
-	'champ_date_label' => 'Date',
 	'champ_descriptif_label' => 'Descriptif',
 	'champ_prix_forfait_ht_explication' => 'Coût forfaitaire pour la livraison, indépendant du contenu',
 	'champ_prix_forfait_ht_label' => 'Prix Forfaitaire H.T.',
@@ -22,8 +21,12 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'champ_prix_volume_ht_label' => 'Prix au volume H.T.',
 	'champ_taxe_label' => 'TVA applicable',
 	'champ_titre_label' => 'Titre',
-	'champ_zone_explication' => 'Liste des codes pays ISO livrables par ce mode, séparés par une virgule',
-	'champ_zone_label' => 'Zone',
+	'champ_zone_cp_exclus_explication' => 'Si la livraison n\'est pas applicable à certains départements/états, liste des débuts de code postaux non livrables par ce mode, séparés par une virgule (Ex : <tt>971,973</tt> pour exclure la Guadeloupe et la Guyanne)',
+	'champ_zone_cp_exclus_label' => 'Départements exclus',
+	'champ_zone_cp_explication' => 'Si la livraison est limitée à certains départements/états, liste des débuts de code postaux livrables par ce mode, séparés par une virgule (Ex : <tt>971,973</tt> pour limiter à la Guadeloupe et la Guyanne)',
+	'champ_zone_cp_label' => 'Départements livrés',
+	'champ_zone_pays_explication' => 'Liste des codes pays ISO livrables par ce mode, séparés par une virgule',
+	'champ_zone_pays_label' => 'Pays livrables',
 
 	// I
 	'icone_creer_livraisonmode' => 'Créer un mode de livraison',
