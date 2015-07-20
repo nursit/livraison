@@ -1,0 +1,4 @@
+"titre","descriptif","zone_pays","zone_cp","zone_cp_exclus","taxe","prix_forfait_ht","prix_unit_ht","prix_poids_ht","prix_volume_ht"
+"Colissimo France","Livraison sous 24 à 48h par Colissimo La Poste ","FR,MC,AD","","971,972,976,974,973,975,978,97150,977,97133,987,988,986,984","0","","","250|5.23 500|6.13 750|6.89 1000|7.51 2000|8.50 5000|10.93 10000|15.68 30000|23.28",""
+"Colissimo Outre-mer","Livraison sous 24 à 48h par Colissimo La Poste ","FR","971,972,976,974,973,975,978,97150,977,97133","","0","","","500|8.69 1000|13.16 2000|17.96 5000|26.60 10000|42.75 30000|95.95",""
+"Colissimo Outre-mer","Livraison sous 24 à 48h par Colissimo La Poste ","FR","987,988,986,984","","0","","","500|10.40 1000|15.72 2000|27.74 5000|46.08 10000|90.25 30000|237.50",""
