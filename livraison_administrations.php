@@ -25,12 +25,15 @@ function livraison_upgrade($nom_meta_base_version, $version_cible) {
 	$maj = array();
 
 	$maj['create'] = array(
-		array('maj_tables', array('spip_livraisonmodes')),
+		array('maj_tables', array('spip_livraisonmodes','spip_commandes')),
 		array('livraison_installer_modes'),
 	);
 
 	$maj['1.0.1'] = array(
 		array('maj_tables', array('spip_livraisonmodes')),
+	);
+	$maj['1.1.0'] = array(
+		array('maj_tables', array('spip_commandes')),
 	);
 
 	include_spip('base/upgrade');

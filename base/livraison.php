@@ -67,7 +67,7 @@ function livraison_declarer_tables_objets_sql($tables) {
 		'date' => "date",
 		'champs_editables'  => array('titre', 'descriptif', 'zone_pays', 'zone_cp', 'zone_cp_exclus', 'taxe', 'prix_forfait_ht', 'prix_unit_ht', 'prix_poids_ht', 'prix_volume_ht'),
 		'champs_versionnes' => array('titre', 'descriptif', 'zone_pays', 'zone_cp', 'zone_cp_exclus', 'taxe', 'prix_forfait_ht', 'prix_unit_ht', 'prix_poids_ht', 'prix_volume_ht'),
-		'rechercher_champs' => array(),
+		'rechercher_champs' => array('titre'=>4,'descriptif'=>1),
 		'tables_jointures'  => array(),
 		'statut_textes_instituer' => array(
 			'prepa'    => 'texte_statut_en_cours_redaction',
@@ -89,6 +89,20 @@ function livraison_declarer_tables_objets_sql($tables) {
 		
 
 	);
+
+	// ajouter les champs a la commande
+	$tables['spip_commandes']['field']['livraison_adresse'] =	"text NOT NULL DEFAULT ''";
+	$tables['spip_commandes']['field']['livraison_cp'] =	"varchar(15) NOT NULL DEFAULT ''";
+	$tables['spip_commandes']['field']['livraison_ville'] =	"varchar(100) NOT NULL DEFAULT ''";
+	$tables['spip_commandes']['field']['livraison_pays'] =	"varchar(5) NOT NULL DEFAULT ''";
+	$tables['spip_commandes']['champs_editables'][] = 'livraison_adresse';
+	$tables['spip_commandes']['champs_editables'][] = 'livraison_cp';
+	$tables['spip_commandes']['champs_editables'][] = 'livraison_ville';
+	$tables['spip_commandes']['champs_editables'][] = 'livraison_pays';
+	$tables['spip_commandes']['champs_versionnes'][] = 'livraison_adresse';
+	$tables['spip_commandes']['champs_versionnes'][] = 'livraison_cp';
+	$tables['spip_commandes']['champs_versionnes'][] = 'livraison_ville';
+	$tables['spip_commandes']['champs_versionnes'][] = 'livraison_pays';
 
 	return $tables;
 }
