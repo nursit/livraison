@@ -1,0 +1,60 @@
+<div class='formulaire_spip formulaire_editer formulaire_#FORM formulaire_#FORM-#ENV{id_commande,nouveau}'>
+
+
+	<BOUCLE_commande(COMMANDES){id_commande=#ENV{_id_commande}}{statut?}>
+	<div class='recapitulatif-commande p'>
+		<div class="row-fluid">
+			<div class="span4">
+				<h3><:shop:recapitulatif_commande:></h3>
+
+			</div>
+			<div class="span8">
+				<p><strong><:shop:titre_votre_commande{id=#REFERENCE}:></strong></p>
+				<INCLURE{fond=inclure/commande,id_commande=#ID_COMMANDE} />
+			</div>
+		</div>
+		<style>
+			.recapitulatif-commande p {margin-bottom: 0}
+		</style>
+	</div>
+	</BOUCLE_commande>
+
+	[<p class="reponse_formulaire reponse_formulaire_ok">(#ENV**{message_ok})</p>]
+	[<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
+
+	<form method='post' action='#ENV{action}'><div>
+		#ACTION_FORMULAIRE{#ENV{action}}
+		<input type='hidden' name='id_livraisonmode' value='#ENV{id_livraisonmode}' />
+
+		<h3><span><:livraison:titre_votre_adresse_livraison:></span></h3>
+
+		#SET{modif,#ENV{modif,''}}
+    <div class="profil_show[(#GET{modif}|oui)hide]">
+	    <button class="btn btn-small modifier right"
+		    name="modif" value="modif"><i class="icon-pencil"></i> <:livraison:bouton_modifier_adresse:></button>
+		  <p>
+			  [<strong>(#LIVRAISON_NOM)</strong><br />]
+			  [(#LIVRAISON_SOCIETE)<br />]
+			  [(#LIVRAISON_ADRESSE|nl2br)<br />]
+			  [(#LIVRAISON_ADRESSE_CP|concat{' ',#LIVRAISON_ADRESSE_VILLE}|trim)<br />]
+			  <BOUCLE_pays_code(PAYS){code=#LIVRAISON_ADRESSE_PAYS}>#NOM<br /></BOUCLE_pays_code>
+			  <br />
+			  [<i>Tel&nbsp;:</i> (#LIVRAISON_TELEPHONE)<br />]
+		  </p>
+    </div>
+    <div class="profil_modif[(#GET{modif}|non)hide]">
+	    [(#ENV{modif,''}|=={#GET{modif}}|oui)
+	    <button class="btn btn-small fermer right"
+	            name="modif" value=""><i class=" icon-remove-sign"></i> <:profils:bouton_fermer:></button>
+	    ]
+      <p class="small"><:livraison:explication_privacy_info_perso:></p>
+	    <ul class="editer-groupe">
+        <INCLURE{fond=formulaires/inc-editer-adresse-livraison,env,prefixe='livraison_'} />
+      </ul>
+	    <p class="boutons"><input type='submit' class='submit' value='<:bouton_enregistrer:>' /></p>
+	  </div>
+
+		[(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]
+		<!--extra-->
+	</div></form>
+</div>

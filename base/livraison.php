@@ -91,18 +91,27 @@ function livraison_declarer_tables_objets_sql($tables) {
 	);
 
 	// ajouter les champs a la commande
+	$tables['spip_commandes']['field']['livraison_nom'] =	"varchar(200) NOT NULL DEFAULT ''";
+	$tables['spip_commandes']['field']['livraison_societe'] =	"varchar(200) NOT NULL DEFAULT ''";
 	$tables['spip_commandes']['field']['livraison_adresse'] =	"text NOT NULL DEFAULT ''";
-	$tables['spip_commandes']['field']['livraison_cp'] =	"varchar(15) NOT NULL DEFAULT ''";
-	$tables['spip_commandes']['field']['livraison_ville'] =	"varchar(100) NOT NULL DEFAULT ''";
-	$tables['spip_commandes']['field']['livraison_pays'] =	"varchar(5) NOT NULL DEFAULT ''";
+	$tables['spip_commandes']['field']['livraison_adresse_cp'] =	"varchar(15) NOT NULL DEFAULT ''";
+	$tables['spip_commandes']['field']['livraison_adresse_ville'] =	"varchar(100) NOT NULL DEFAULT ''";
+	$tables['spip_commandes']['field']['livraison_adresse_pays'] =	"varchar(5) NOT NULL DEFAULT ''";
+	$tables['spip_commandes']['field']['livraison_telephone'] =	"varchar(25) NOT NULL DEFAULT ''";
+	$tables['spip_commandes']['champs_editables'][] = 'livraison_nom';
+	$tables['spip_commandes']['champs_editables'][] = 'livraison_societe';
 	$tables['spip_commandes']['champs_editables'][] = 'livraison_adresse';
-	$tables['spip_commandes']['champs_editables'][] = 'livraison_cp';
-	$tables['spip_commandes']['champs_editables'][] = 'livraison_ville';
-	$tables['spip_commandes']['champs_editables'][] = 'livraison_pays';
+	$tables['spip_commandes']['champs_editables'][] = 'livraison_adresse_cp';
+	$tables['spip_commandes']['champs_editables'][] = 'livraison_adresse_ville';
+	$tables['spip_commandes']['champs_editables'][] = 'livraison_adresse_pays';
+	$tables['spip_commandes']['champs_editables'][] = 'livraison_telephone';
+	$tables['spip_commandes']['champs_versionnes'][] = 'livraison_nom';
+	$tables['spip_commandes']['champs_versionnes'][] = 'livraison_societe';
 	$tables['spip_commandes']['champs_versionnes'][] = 'livraison_adresse';
-	$tables['spip_commandes']['champs_versionnes'][] = 'livraison_cp';
-	$tables['spip_commandes']['champs_versionnes'][] = 'livraison_ville';
-	$tables['spip_commandes']['champs_versionnes'][] = 'livraison_pays';
+	$tables['spip_commandes']['champs_versionnes'][] = 'livraison_adresse_cp';
+	$tables['spip_commandes']['champs_versionnes'][] = 'livraison_adresse_ville';
+	$tables['spip_commandes']['champs_versionnes'][] = 'livraison_adresse_pays';
+	$tables['spip_commandes']['champs_versionnes'][] = 'livraison_telephone';
 
 	return $tables;
 }
