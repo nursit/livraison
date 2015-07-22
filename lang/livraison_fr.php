@@ -38,6 +38,7 @@ et ne seront jamais communiquées à des tiers. Nous ne pratiquons ni l\'achat, 
 	'erreur_livraison_adresse_cp_obligatoire' => 'Vous devez renseigner votre code postal.',
 	'erreur_livraison_adresse_ville_obligatoire' => 'Vous devez renseigner votre ville.',
 	'erreur_livraison_adresse_pays_obligatoire' => 'Vous devez renseigner votre pays.',
+	'erreur_adresse_non_livrable' => 'Hélas, nous ne pouvons pas livrer vers cette destination ! Modifiez l\'adresse de livraison, ou contactez notre service client pour trouver une solution.',
 
 
 	// T
