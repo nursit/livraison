@@ -15,6 +15,10 @@
 		</div>
 		<style>
 			.recapitulatif-commande p {margin-bottom: 0}
+			.recapitulatif-commande table.commande {margin-bottom: 0}
+			/*.recapitulatif-commande table.commande thead,
+			.recapitulatif-commande table.commande tbody {display: none;}*/
+			.recapitulatif-commande table.commande tfoot td {padding:0}
 		</style>
 	</div>
 	</BOUCLE_commande>
@@ -25,6 +29,7 @@
 	<form method='post' action='#ENV{action}'><div>
 		#ACTION_FORMULAIRE{#ENV{action}}
 		<input type='hidden' name='id_livraisonmode' value='#ENV{id_livraisonmode}' />
+		<input type='submit' class='submit offscreen over' name="save" value='<:bouton_enregistrer:>' />
 
 		<h3><span><:livraison:titre_votre_adresse_livraison:></span></h3>
 
@@ -51,8 +56,30 @@
 	    <ul class="editer-groupe">
         <INCLURE{fond=formulaires/inc-editer-adresse-livraison,env,prefixe='livraison_'} />
       </ul>
-	    <p class="boutons"><input type='submit' class='submit' value='<:bouton_enregistrer:>' /></p>
+	    <p class="boutons"><input type='submit' class='submit' name="save" value='<:bouton_enregistrer:>' /></p>
 	  </div>
+
+		<B_choixmodes>
+			<div class="liste long">
+			<h3><span><:livraison:titre_votre_mode_de_livraison:></span></h3>
+				<ul class="liste-items">
+				<BOUCLE_choixmodes(LIVRAISONMODES){id_livraisonmode IN #ENV{_id_livraisonmode}|array_keys}{par num titre,titre}{si #GET{modif}|non}>
+					<li class="item">
+						<div class="entry">
+							<div class="postmeta p pull-right">
+								<button type="submit" class="btn btn-primary" name="choixmode[#ID_LIVRAISONMODE]" value="#ID_LIVRAISONMODE">
+									Livraison pour [(#ENV{_id_livraisonmode}|table_valeur{#ID_LIVRAISONMODE}|affiche_monnaie)]
+								</button>
+							</div>
+							[<strong class="entry-title">(#TITRE)</strong>]
+							[<div class="entry-content">(#DESCRIPTIF)</div>]
+						</div>
+					</li>
+				</BOUCLE_choixmodes>
+				</ul>
+			</div>
+		</B_choixmodes>
+		<//B_choixmodes>
 
 		[(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]
 		<!--extra-->
