@@ -14,6 +14,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_adresse_ville' => 'Ville',
 	'label_adresse_pays' => 'Pays',
 	'label_telephone' => 'Téléphone',
+	'label_adresse_livraison_commande' => 'Adresse de livraison',
 
 
 	'bouton_modifier_adresse' => 'Modifier l\'adresse',

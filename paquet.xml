@@ -2,7 +2,7 @@
 	prefix="livraison"
 	categorie="divers"
 	version="1.0.0"
-	etat="dev"
+	etat="test"
 	compatibilite="[3.0.0;3.0.*]"
 	logo="prive/themes/spip/images/livraison-32.png"
 	documentation=""
@@ -22,6 +22,7 @@
 
 
 	<pipeline nom="autoriser" inclure="livraison_autorisations.php" /> 
+	<pipeline nom="afficher_contenu_objet" inclure="livraison_pipelines.php" />
 
 	<pipeline nom="declarer_tables_objets_sql" inclure="base/livraison.php" /> 
 	<pipeline nom="declarer_tables_interfaces" inclure="base/livraison.php" /> 
