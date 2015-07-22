@@ -17,9 +17,12 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 
 	'bouton_modifier_adresse' => 'Modifier l\'adresse',
+	'bouton_choix_mode' => 'Choisir la livraison par @mode@ pour @prix@',
+	'bouton_suite' => 'Suite',
 
 	'info_adresse_enregistree' => 'Votre adresse a bien été mise à jour',
 	'info_livraisonmode_enregistre' => 'Votre mode de livraison a bien été enregistré',
+	'info_livraison_par' => 'Livraison par @mode@',
 
 	// C
 	'cfg_exemple' => 'Exemple',

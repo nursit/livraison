@@ -13,7 +13,7 @@
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
 
-function formulaires_adresser_commande_charger_dist($id_commande, $retour=''){
+function formulaires_adresser_commande_charger_dist($id_commande, $url_suite='', $titre_suite=''){
 
 	// il faut avoir une commande en cours
 	if (!$id_commande
@@ -52,7 +52,8 @@ function formulaires_adresser_commande_charger_dist($id_commande, $retour=''){
 	}
 
 	$valeurs['_id_commande'] = $id_commande;
-	$valeurs['_retour'] = $retour;
+	$valeurs['_url_suite'] = $url_suite;
+	$valeurs['_titre_suite'] = $titre_suite;
 	$valeurs['modif'] = '';
 	$valeurs['_id_livraisonmode'] = array();
 
@@ -76,14 +77,20 @@ function formulaires_adresser_commande_charger_dist($id_commande, $retour=''){
 			}
 		}
 
-		// TODO : si un seul mode possible l'affecter directement sans passer par l'etape choix du mode
-
+		// si un seul mode possible l'affecter directement sans passer par l'etape choix du mode
+		if (count($valeurs['_id_livraisonmode'])==1 AND !$valeurs['modif']){
+			include_spip('inc/livraison');
+			fixer_livraison_commande($id_commande,reset(array_keys($valeurs['_id_livraisonmode'])));
+		}
 	}
+
+	// gestion du cache
+	$valeurs['_hash'] = md5(serialize(sql_allfetsel("id_commandes_detail,prix_unitaire_ht,taxe,objet,id_objet,quantite","spip_commandes_details","id_commande=".intval($id_commande))));
 
 	return $valeurs;
 }
 
-function formulaires_adresser_commande_verifier_dist($id_commande, $retour=''){
+function formulaires_adresser_commande_verifier_dist($id_commande, $url_suite='', $titre_suite=''){
 	$erreurs = array();
 
 	$oblis = array(
@@ -106,7 +113,7 @@ function formulaires_adresser_commande_verifier_dist($id_commande, $retour=''){
 	return $erreurs;
 }
 
-function formulaires_adresser_commande_traiter_dist($id_commande, $retour=''){
+function formulaires_adresser_commande_traiter_dist($id_commande, $url_suite='', $titre_suite=''){
 	include_spip('inc/livraison');
 	$res = array();
 
@@ -126,6 +133,10 @@ function formulaires_adresser_commande_traiter_dist($id_commande, $retour=''){
 		$choixmode = reset($choixmode);
 		fixer_livraison_commande($id_commande,$choixmode);
 		$res['message_ok'] = _T('livraison:info_livraisonmode_enregistre');
+	}
+
+	if (_request('resetlivraison')){
+		reset_livraison_commande($id_commande);
 	}
 
 	return $res;

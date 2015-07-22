@@ -154,6 +154,14 @@ function livraison_calculer_cout($id_commande,$id_livraisonmode,$pays,$code_post
 	return array($prix,$taxe);
 }
 
+/**
+ * Supprimer le mode de livraison d'une commande
+ * @param $id_commande
+ */
+function reset_livraison_commande($id_commande){
+	$where = "id_commande=".intval($id_commande)." AND objet=".sql_quote('livraisonmode');
+	sql_delete("spip_commandes_details",$where);
+}
 
 /**
  * Ajouter/mettre a jout le mode et le cout de livraison de la commande
@@ -188,12 +196,12 @@ function fixer_livraison_commande($id_commande,$id_livraisonmode=0){
 	// si ce mode de livraison n'est pas possible on ne fait rien d'autre
 	if (!$cout) return false;
 
+	$mode = sql_getfetsel("titre","spip_livraisonmodes","id_livraisonmode=".intval($id_livraisonmode));
 	// et en inserer 1 si besoin
 	if (!$n){
-		$titre = sql_getfetsel("titre","spip_livraisonmodes","id_livraisonmode=".intval($id_livraisonmode));
 		$set = array(
 			'id_commande' => $id_commande,
-			'descriptif' => $titre,
+			'descriptif' => _T('livraison:info_livraison_par',array('mode'=>$mode)),
 			'quantite' => 1,
 			'prix_unitaire_ht' => 0,
 			'taxe' => 0,
@@ -207,10 +215,12 @@ function fixer_livraison_commande($id_commande,$id_livraisonmode=0){
 	// mettre a jour le prix du mode de livraison restant
 	$id_commandes_detail = sql_getfetsel("id_commandes_detail","spip_commandes_details",$where,'','id_commandes_detail','0,1');
 	$set = array(
+		'descriptif' => _T('livraison:info_livraison_par',array('mode'=>$mode)),
 		'quantite' => 1,
 		'prix_unitaire_ht' => reset($cout),
 		'taxe' => end($cout),
 		'statut' => 'attente',
+		'id_objet' => $id_livraisonmode,
 	);
 	sql_updateq("spip_commandes_details",$set,"id_commandes_detail=".intval($id_commandes_detail));
 

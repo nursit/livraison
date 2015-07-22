@@ -10,14 +10,15 @@
 			</div>
 			<div class="span8">
 				<p><strong><:shop:titre_votre_commande{id=#REFERENCE}:></strong></p>
-				<INCLURE{fond=inclure/commande,id_commande=#ID_COMMANDE} />
+				<INCLURE{fond=inclure/commande,id_commande=#ID_COMMANDE,_hash=#ENV{_hash}} />
 			</div>
 		</div>
 		<style>
 			.recapitulatif-commande p {margin-bottom: 0}
 			.recapitulatif-commande table.commande {margin-bottom: 0}
-			/*.recapitulatif-commande table.commande thead,
-			.recapitulatif-commande table.commande tbody {display: none;}*/
+			.recapitulatif-commande table.commande caption,
+			.recapitulatif-commande table.commande thead,
+			.recapitulatif-commande table.commande tbody {display: none;}
 			.recapitulatif-commande table.commande tfoot td {padding:0}
 		</style>
 	</div>
@@ -59,27 +60,60 @@
 	    <p class="boutons"><input type='submit' class='submit' name="save" value='<:bouton_enregistrer:>' /></p>
 	  </div>
 
-		<B_choixmodes>
+		<B_modechoisi>
+		<BOUCLE_modechoisi(COMMANDES_DETAILS){id_commande=#ENV{_id_commande}}{objet=livraisonmode}{si #GET{modif}|non}{0,1}>
 			<div class="liste long">
 			<h3><span><:livraison:titre_votre_mode_de_livraison:></span></h3>
-				<ul class="liste-items">
-				<BOUCLE_choixmodes(LIVRAISONMODES){id_livraisonmode IN #ENV{_id_livraisonmode}|array_keys}{par num titre,titre}{si #GET{modif}|non}>
+				<ul class="liste-items info">
+				<BOUCLE_mode(LIVRAISONMODES){id_livraisonmode=#ID_OBJET}>
 					<li class="item">
 						<div class="entry">
+							[(#ENV{_id_livraisonmode}|count|>{1}|oui)
 							<div class="postmeta p pull-right">
-								<button type="submit" class="btn btn-primary" name="choixmode[#ID_LIVRAISONMODE]" value="#ID_LIVRAISONMODE">
-									Livraison pour [(#ENV{_id_livraisonmode}|table_valeur{#ID_LIVRAISONMODE}|affiche_monnaie)]
+								<button type="submit" class="btn btn-small" name="resetlivraison" value=" ">
+									<i class="icon-remove"></i> Choisir un autre mode
 								</button>
-							</div>
-							[<strong class="entry-title">(#TITRE)</strong>]
-							[<div class="entry-content">(#DESCRIPTIF)</div>]
+							</div>]
+							<strong class="entry-title">[(#LOGO_LIVRAISONMODE|image_reduire{-1}) ]<:livraison:info_livraison_par{mode=#TITRE}:></strong>
+							<div class="entry-content"><p>[(#ENV{_id_livraisonmode}|table_valeur{#ID_LIVRAISONMODE}|affiche_monnaie)]</p></div>
 						</div>
 					</li>
-				</BOUCLE_choixmodes>
+				</BOUCLE_mode>
 				</ul>
 			</div>
-		</B_choixmodes>
-		<//B_choixmodes>
+
+			<div class="boutons">
+				<a class="btn btn-primary btn-large pull-right"
+					href="#ENV{_url_suite}">
+					[(#ENV{_titre_suite,<:livraison:bouton_suite:>})] <i class="icon-chevron-right icon-white"></i>
+				</a>
+			</div>
+
+		</BOUCLE_modechoisi>
+		</B_modechoisi>
+			<B_choixmodes>
+				<div class="liste long">
+				<h3><span><:livraison:titre_votre_mode_de_livraison:></span></h3>
+					<ul class="liste-items">
+					<BOUCLE_choixmodes(LIVRAISONMODES){id_livraisonmode IN #ENV{_id_livraisonmode}|array_keys}{par num titre,titre}{si #GET{modif}|non}>
+						<li class="item">
+							<div class="entry">
+								<strong class="entry-title">[(#LOGO_LIVRAISONMODE|image_reduire{-1}) ][(#TITRE)]</strong>
+								[<div class="entry-content">(#DESCRIPTIF)</div>]
+								<div class="postmeta p">
+									<button type="submit" class="btn btn-primary" name="choixmode[#ID_LIVRAISONMODE]" value="#ID_LIVRAISONMODE">
+										#SET{prix,#ENV{_id_livraisonmode}|table_valeur{#ID_LIVRAISONMODE}|affiche_monnaie}
+										<:livraison:bouton_choix_mode{mode=#TITRE,prix=#GET{prix}}:>
+									</button>
+								</div>
+							</div>
+						</li>
+					</BOUCLE_choixmodes>
+					</ul>
+				</div>
+			</B_choixmodes>
+			<//B_choixmodes>
+		<//B_modechoisi>
 
 		[(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]
 		<!--extra-->
