@@ -29,11 +29,21 @@ function formulaires_adresser_commande_charger_dist($id_commande, $url_suite='',
 		'livraison_adresse_ville'=>$commande['livraison_adresse_ville'],
 		'livraison_adresse_pays'=>$commande['livraison_adresse_pays'],
 		'livraison_telephone'=>$commande['livraison_telephone'],
+		'modif' => '',
 	);
 
+	// si une des infos est manquante, ouvrir le formulaire en edition de l'adresse
+	if (!$valeurs['livraison_nom']
+		OR !$valeurs['livraison_adresse']
+		OR !$valeurs['livraison_adresse_cp']
+		OR !$valeurs['livraison_adresse_ville']
+		OR !$valeurs['livraison_adresse_pays']){
+		$valeurs['modif'] = ' ';
+	}
+
 	// si aucune info adresse est renseignee dans la commande,
-	// on recupere l'adresse depuis l'auteur si possible
-	if (!strlen(implode('',$valeurs))
+	// on recupere l'adresse depuis l'auteur si possible pour pre-remplir le formulaire
+	if (!strlen(trim(implode('',$valeurs)))
 	  AND $commande['id_auteur']
 	  AND $renseigner_adresse_auteur = charger_fonction("renseigner_adresse_auteur","inc",true)){
 		if ($adresse = $renseigner_adresse_auteur($commande['id_auteur'])){
@@ -54,18 +64,9 @@ function formulaires_adresser_commande_charger_dist($id_commande, $url_suite='',
 	$valeurs['_id_commande'] = $id_commande;
 	$valeurs['_url_suite'] = $url_suite;
 	$valeurs['_titre_suite'] = $titre_suite;
-	$valeurs['modif'] = '';
 	$valeurs['_id_livraisonmode'] = array();
 
-	// si une des infos est manquante, ouvrir le formulaire en edition de l'adresse
-	if (!$valeurs['livraison_nom']
-		OR !$valeurs['livraison_adresse']
-		OR !$valeurs['livraison_adresse_cp']
-		OR !$valeurs['livraison_adresse_ville']
-		OR !$valeurs['livraison_adresse_pays']){
-		$valeurs['modif'] = ' ';
-	}
-	else {
+	if (!$valeurs['modif']) {
 		// trouver les modes de livraison dispo et leurs prix, en fonction de l'adresse
 		include_spip('inc/livraison');
 		$ids = sql_allfetsel("id_livraisonmode","spip_livraisonmodes","statut=".sql_quote('publie'));
