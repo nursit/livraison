@@ -49,10 +49,6 @@
 		  </p>
     </div>
     <div class="profil_modif[(#GET{modif}|non)hide]">
-	    [(#ENV{modif,''}|=={#GET{modif}}|oui)
-	    <button class="btn btn-small fermer right"
-	            name="modif" value=""><i class=" icon-remove-sign"></i> <:profils:bouton_fermer:></button>
-	    ]
       <p class="small"><:livraison:explication_privacy_info_perso:></p>
 	    <ul class="editer-groupe">
         <INCLURE{fond=formulaires/inc-editer-adresse-livraison,env,prefixe='livraison_'} />
