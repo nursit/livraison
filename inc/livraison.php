@@ -123,29 +123,33 @@ function livraison_calculer_cout($id_commande,$id_livraisonmode,$pays,$code_post
 	$bareme_poids = livraison_poids_volume_bareme_from_string($mode['prix_poids_ht']);
 	$bareme_volume = livraison_poids_volume_bareme_from_string($mode['prix_volume_ht']);
 
+	$poids_total = $volume_total = 0;
 	if ($bareme_poids OR $bareme_volume){
 		foreach($details as $detail){
 			if ($mesure = charger_fonction($detail['objet'],"mesure",true)
 			  OR $mesure = charger_fonction("defaut","mesure",true)){
 				list($poids,$volume) = $mesure($detail['objet'],$detail['id_objet'],$detail['quantite']);
-
-				if ($poids>0 AND $bareme_poids){
-					$p = livraison_appliquer_bareme($poids,$bareme_poids);
-					// si on est hors bareme, on ne peut pas utiliser ce mode de livraison
-					if ($p===false) {
-						return false;
-					}
-					$prix += $p;
-				}
-				if ($volume>0 AND $bareme_volume){
-					$p = livraison_appliquer_bareme($volume,$bareme_volume);
-					// si on est hors bareme, on ne peut pas utiliser ce mode de livraison
-					if ($p===false) {
-						return false;
-					}
-					$prix += $p;
-				}
+				$poids_total += $poids;
+				$volume_total += $volume;
 			}
+		}
+		if ($poids_total>0 AND $bareme_poids){
+			$p = livraison_appliquer_bareme($poids_total,$bareme_poids);
+			// si on est hors bareme, on ne peut pas utiliser ce mode de livraison
+			// TODO : si le poids depasse le poids maxi, couper le colis en 2,3... pour calculer le prix
+			if ($p===false) {
+				return false;
+			}
+			$prix += $p;
+		}
+		if ($volume_total>0 AND $bareme_volume){
+			$p = livraison_appliquer_bareme($volume_total,$bareme_volume);
+			// si on est hors bareme, on ne peut pas utiliser ce mode de livraison
+			// TODO : si le volume depasse le volume maxi, couper le colis en 2,3... pour calculer le prix
+			if ($p===false) {
+				return false;
+			}
+			$prix += $p;
 		}
 	}
 
