@@ -15,6 +15,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_adresse_pays' => 'Pays',
 	'label_telephone' => 'Téléphone',
 	'label_adresse_livraison_commande' => 'Adresse de livraison',
+	'label_adresse_facturation_commande' => 'Adresse de facturation',
+	'label_adresse_facturation_identique' => 'Utiliser cette adresse pour la facture',
 
 
 	'bouton_modifier_adresse' => 'Modifier l\'adresse',
@@ -44,6 +46,7 @@ et ne seront jamais communiquées à des tiers. Nous ne pratiquons ni l\'achat, 
 	// T
 	'titre_page_configurer_livraison' => 'Livraison',
 	'titre_votre_adresse_livraison' => 'Adresse de livraison',
+	'titre_votre_adresse_facturation' => 'Adresse de facturation',
 	'titre_votre_mode_de_livraison' => 'Mode de livraison',
 );
 

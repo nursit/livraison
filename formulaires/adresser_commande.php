@@ -5,7 +5,7 @@
  *
  * @plugin     Livraison
  * @copyright  2015
- * @author     Cédric
+ * @author     Cedric
  * @licence    GNU/GPL
  * @package    SPIP\Livraison\Formulaires
  */
@@ -60,6 +60,21 @@ function formulaires_adresser_commande_charger_dist($id_commande, $url_suite='',
 			}
 		}
 	}
+
+	// l'adresse de facturation, qui peut etre vide
+	// (dans ce cas on considere qu'elle est identique a la livraison)
+	$valeur['facturation_nom'] = $commande['facturation_nom'];
+	$valeur['facturation_societe'] = $commande['facturation_societe'];
+	$valeur['facturation_adresse'] = $commande['facturation_adresse'];
+	$valeur['facturation_adresse_cp'] = $commande['facturation_adresse_cp'];
+	$valeur['facturation_adresse_ville'] = $commande['facturation_adresse_ville'];
+	$valeur['facturation_adresse_pays'] = $commande['facturation_adresse_pays'];
+	$valeur['facturation_telephone'] = $commande['facturation_telephone'];
+	$valeur['facturation_identique_livraison'] = '';
+	if (!$valeur['facturation_adresse_ville']){
+		$valeur['facturation_identique_livraison'] = 'oui';
+	}
+
 
 	$valeurs['_id_commande'] = $id_commande;
 	$valeurs['_url_suite'] = $url_suite;

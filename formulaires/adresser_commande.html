@@ -52,6 +52,26 @@
       <p class="small"><:livraison:explication_privacy_info_perso:></p>
 	    <ul class="editer-groupe">
         <INCLURE{fond=formulaires/inc-editer-adresse-livraison,env,prefixe='livraison_'} />
+		    #SET{name,facturation_identique_livraison}#SET{obli,''}#SET{defaut,'oui'}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+				<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
+					<span class='erreur_message'>(#GET{erreurs})</span>
+					]
+					#SET{val,''}
+					<input type="hidden" name="#GET{name}" value="#GET{val}" />
+					#SET{val,oui}
+					<div class="choix">
+						<input type="checkbox" name="#GET{name}" class="checkbox checkbox_inverse" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
+						<label for="#GET{name}_#GET{val}"><:livraison:label_adresse_facturation_identique:></label>
+					</div>
+				</li>
+		    <li class="fieldset suite">
+			    <fieldset>
+				    <legend class="h3"><:livraison:titre_votre_adresse_facturation:></legend>
+				    <ul class="editer-groupe">
+					    <INCLURE{fond=formulaires/inc-editer-adresse-livraison,env,prefixe='facturation_'} />
+				    </ul>
+			    </fieldset>
+		    </li>
       </ul>
 	    <p class="boutons"><input type='submit' class='submit' name="save" value='<:bouton_enregistrer:>' /></p>
 	  </div>
@@ -120,3 +140,24 @@
 		<!--extra-->
 	</div></form>
 </div>
+<style>
+	.suite {margin: 1em 0 1em 25px;}
+</style>
+<script>
+jQuery(function(){
+	function update_visibility_fieldset(node){
+		var $suite = jQuery(node).closest('.editer').next('.suite');
+		if (jQuery(node).is('.checkbox_inverse')?!jQuery(node).prop('checked'):jQuery(node).prop('checked')){
+			$suite.filter(':hidden').show('fast');
+		}
+		else {
+			$suite.filter(':visible').hide('fast');
+		}
+	}
+	jQuery('.fieldset.suite')
+		.prev()
+		.find('input.checkbox')
+		.bind('change',function(){update_visibility_fieldset(this);})
+		.each(function(){update_visibility_fieldset(this);});
+});
+</script>
