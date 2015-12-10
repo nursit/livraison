@@ -1,0 +1,7 @@
+<BOUCLE_cde(COMMANDES){id_commande}{statut?}>
+[(#LIVRAISON_NOM)]
+[<br />(#LIVRAISON_SOCIETE)]
+[<br />(#LIVRAISON_ADRESSE|propre|PtoBR)]
+[<br />(#LIVRAISON_ADRESSE_CP|concat{' ',#LIVRAISON_ADRESSE_VILLE}|trim)]
+<BOUCLE_pays_code(PAYS){code=#LIVRAISON_ADRESSE_PAYS}><br />#NOM</BOUCLE_pays_code>
+</BOUCLE_cde>

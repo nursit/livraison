@@ -1,12 +1,16 @@
+<BOUCLE_cde(COMMANDES){id_commande}{statut?}>
+[(#LIVRAISON_NOM|oui)
 <div class="champ contenu_descriptif">
-	<div class="label"><:livraison:label_adresse_livraison_commande:> : </div>
-	<p>
-	<BOUCLE_cde(COMMANDES){id_commande}{statut?}>
-	[(#LIVRAISON_NOM)]
-	[<br />(#LIVRAISON_SOCIETE)]
-	[<br />(#LIVRAISON_ADRESSE|propre|PtoBR)]
-	[<br />(#LIVRAISON_ADRESSE_CP|concat{' ',#LIVRAISON_ADRESSE_VILLE}|trim)]
-	<BOUCLE_pays_code(PAYS){code=#LIVRAISON_ADRESSE_PAYS}><br />#NOM</BOUCLE_pays_code>
-	</BOUCLE_cde>
-	</p>
-</div>
+	<div class="demi left" style="float:left;width: 45%;">
+		<div class="label"><:livraison:label_adresse_livraison_commande:> : </div>
+		<p>#MODELE{commande_adresse_livraison,id_commande}</p>
+	</div>
+	<div class="demi right" style="float:right;width: 45%;">
+		<div class="label"><:livraison:label_adresse_facturation_commande:> : </div>
+		<p>
+		[(#FACTURATION_NOM|oui)#MODELE{commande_adresse_facturation,id_commande}]
+		[(#FACTURATION_NOM|non)<i><:livraison:info_facturation_meme_adresse:></i>]
+		</p>
+	</div>
+</div>]
+</BOUCLE_cde>

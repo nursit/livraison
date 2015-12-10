@@ -1,0 +1,7 @@
+<BOUCLE_cde(COMMANDES){id_commande}{statut?}>
+[(#FACTURATION_NOM)]
+[<br />(#FACTURATION_SOCIETE)]
+[<br />(#FACTURATION_ADRESSE|propre|PtoBR)]
+[<br />(#FACTURATION_ADRESSE_CP|concat{' ',#FACTURATION_ADRESSE_VILLE}|trim)]
+<BOUCLE_pays_code(PAYS){code=#FACTURATION_ADRESSE_PAYS}><br />#NOM</BOUCLE_pays_code>
+</BOUCLE_cde>
