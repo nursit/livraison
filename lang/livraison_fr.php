@@ -27,6 +27,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_adresse_enregistree' => 'Votre adresse a bien été mise à jour',
 	'info_livraisonmode_enregistre' => 'Votre mode de livraison a bien été enregistré',
 	'info_livraison_par' => 'Livraison par @mode@',
+	'info_facturation_meme_adresse' => 'Facturation à la même adresse',
 
 	// C
 	'cfg_exemple' => 'Exemple',
