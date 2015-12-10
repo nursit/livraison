@@ -75,7 +75,6 @@ function formulaires_adresser_commande_charger_dist($id_commande, $url_suite='',
 		$valeurs['facturation_identique_livraison'] = 'oui';
 	}
 
-
 	$valeurs['_id_commande'] = $id_commande;
 	$valeurs['_url_suite'] = $url_suite;
 	$valeurs['_titre_suite'] = $titre_suite;
@@ -108,6 +107,13 @@ function formulaires_adresser_commande_charger_dist($id_commande, $url_suite='',
 
 function formulaires_adresser_commande_verifier_dist($id_commande, $url_suite='', $titre_suite=''){
 	$erreurs = array();
+
+	if (_request('modif')){
+		$erreurs['dummy'] = ' '; // forcer la resaisie en mode modification
+		// vider ce get pour retomber sur la valeur par defaut
+		set_request('facturation_identique_livraison');
+		return $erreurs;
+	}
 
 	$oblis = array(
 		'livraison_nom',

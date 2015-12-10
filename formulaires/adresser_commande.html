@@ -32,9 +32,13 @@
 		<input type='hidden' name='id_livraisonmode' value='#ENV{id_livraisonmode}' />
 		<input type='submit' class='submit offscreen over' name="save" value='<:bouton_enregistrer:>' />
 
-		<h3><span><:livraison:titre_votre_adresse_livraison:></span></h3>
-
 		#SET{modif,#ENV{modif,''}}
+		<h3><span><:livraison:titre_votre_adresse_livraison:></span>
+			[(#FACTURATION_NOM|non|et{#GET{modif}|non})
+      <br /><small><i>Facturation à la même adresse</i></small>
+      ]
+		</h3>
+
     <div class="profil_show[(#GET{modif}|oui)hide]">
 	    <button class="btn btn-small modifier right"
 		    name="modif" value="modif"><i class="icon-pencil"></i> <:livraison:bouton_modifier_adresse:></button>
@@ -44,8 +48,7 @@
 			  [(#LIVRAISON_ADRESSE|nl2br)<br />]
 			  [(#LIVRAISON_ADRESSE_CP|concat{' ',#LIVRAISON_ADRESSE_VILLE}|trim)<br />]
 			  <BOUCLE_pays_code(PAYS){code=#LIVRAISON_ADRESSE_PAYS}>#NOM<br /></BOUCLE_pays_code>
-			  <br />
-			  [<i>Tel&nbsp;:</i> (#LIVRAISON_TELEPHONE)<br />]
+			  [<br /><i>Tel&nbsp;:</i> (#LIVRAISON_TELEPHONE)<br />]
 		  </p>
     </div>
     <div class="profil_modif[(#GET{modif}|non)hide]">
