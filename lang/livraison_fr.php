@@ -35,11 +35,16 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// E
 	'explication_privacy_info_perso' => 'Ces informations sont uniquement utilisées pour gérer la livraison de votre commande,
 et ne seront jamais communiquées à des tiers. Nous ne pratiquons ni l\'achat, ni la vente, ni l\'échange de fichiers.',
-	'erreur_livraison_nom_obligatoire' => 'Vous devez indiquer votre nom.',
-	'erreur_livraison_adresse_obligatoire' => 'Vous devez renseigner votre adresse.',
-	'erreur_livraison_adresse_cp_obligatoire' => 'Vous devez renseigner votre code postal.',
-	'erreur_livraison_adresse_ville_obligatoire' => 'Vous devez renseigner votre ville.',
-	'erreur_livraison_adresse_pays_obligatoire' => 'Vous devez renseigner votre pays.',
+	'erreur_livraison_nom_obligatoire' => 'Vous devez indiquer le nom pour la livraison.',
+	'erreur_livraison_adresse_obligatoire' => 'Vous devez renseigner l\'adresse de livraison.',
+	'erreur_livraison_adresse_cp_obligatoire' => 'Vous devez renseigner le code postal pour la livraison.',
+	'erreur_livraison_adresse_ville_obligatoire' => 'Vous devez renseigner la ville pour la livraison.',
+	'erreur_livraison_adresse_pays_obligatoire' => 'Vous devez renseigner le pays pour la livraison.',
+	'erreur_facturation_nom_obligatoire' => 'Vous devez indiquer un nom pour la facture.',
+	'erreur_facturation_adresse_obligatoire' => 'Vous devez renseigner l\'adresse de facturation.',
+	'erreur_facturation_adresse_cp_obligatoire' => 'Vous devez renseigner le code postal pour la facture.',
+	'erreur_facturation_adresse_ville_obligatoire' => 'Vous devez renseigner la ville pour la facture.',
+	'erreur_facturation_adresse_pays_obligatoire' => 'Vous devez renseigner le pays pour la facture.',
 	'erreur_adresse_non_livrable' => 'Hélas, nous ne pouvons pas livrer vers cette destination ! Modifiez l\'adresse de livraison, ou contactez notre service client pour trouver une solution.',
 
 

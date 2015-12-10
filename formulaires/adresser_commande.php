@@ -63,16 +63,16 @@ function formulaires_adresser_commande_charger_dist($id_commande, $url_suite='',
 
 	// l'adresse de facturation, qui peut etre vide
 	// (dans ce cas on considere qu'elle est identique a la livraison)
-	$valeur['facturation_nom'] = $commande['facturation_nom'];
-	$valeur['facturation_societe'] = $commande['facturation_societe'];
-	$valeur['facturation_adresse'] = $commande['facturation_adresse'];
-	$valeur['facturation_adresse_cp'] = $commande['facturation_adresse_cp'];
-	$valeur['facturation_adresse_ville'] = $commande['facturation_adresse_ville'];
-	$valeur['facturation_adresse_pays'] = $commande['facturation_adresse_pays'];
-	$valeur['facturation_telephone'] = $commande['facturation_telephone'];
-	$valeur['facturation_identique_livraison'] = '';
-	if (!$valeur['facturation_adresse_ville']){
-		$valeur['facturation_identique_livraison'] = 'oui';
+	$valeurs['facturation_nom'] = $commande['facturation_nom'];
+	$valeurs['facturation_societe'] = $commande['facturation_societe'];
+	$valeurs['facturation_adresse'] = $commande['facturation_adresse'];
+	$valeurs['facturation_adresse_cp'] = $commande['facturation_adresse_cp'];
+	$valeurs['facturation_adresse_ville'] = $commande['facturation_adresse_ville'];
+	$valeurs['facturation_adresse_pays'] = $commande['facturation_adresse_pays'];
+	$valeurs['facturation_telephone'] = $commande['facturation_telephone'];
+	$valeurs['facturation_identique_livraison'] = '';
+	if (!trim($valeurs['facturation_nom'])){
+		$valeurs['facturation_identique_livraison'] = 'oui';
 	}
 
 
@@ -116,12 +116,28 @@ function formulaires_adresser_commande_verifier_dist($id_commande, $url_suite=''
 		'livraison_adresse_ville',
 		'livraison_adresse_pays'
 	);
+	if (_request('facturation_identique_livraison')!=='oui'){
+		$oblis[] = 'facturation_nom';
+		$oblis[] = 'facturation_adresse';
+		$oblis[] = 'facturation_adresse_cp';
+		$oblis[] = 'facturation_adresse_ville';
+		$oblis[] = 'facturation_adresse_pays';
+	}
 
 	foreach ($oblis as $obli){
 		if (!strlen(trim(_request($obli)))){
 			$erreurs[$obli] = _T('livraison:erreur_' . $obli . '_obligatoire');
 			set_request('modif',' ');
 		}
+	}
+
+	if (isset($erreurs['facturation_nom']) AND isset($erreurs['facturation_adresse'])){
+		$erreurs['message_erreur'] = _T('livraison:erreur_facturation_adresse_obligatoire');
+		unset($erreurs['facturation_nom']);
+		unset($erreurs['facturation_adresse']);
+		unset($erreurs['facturation_adresse_cp']);
+		unset($erreurs['facturation_adresse_ville']);
+		unset($erreurs['facturation_adresse_pays']);
 	}
 
 	// TODO : verifier la validite du CP et du pays ?
@@ -135,6 +151,17 @@ function formulaires_adresser_commande_traiter_dist($id_commande, $url_suite='',
 
 	// mettre a jour l'adresse de livraison de la commande
 	if (_request('save')){
+		// adresse de facturation identique a la livraison ? on laisse vide
+		if (_request('facturation_identique_livraison')==='oui'){
+			set_request('facturation_nom','');
+			set_request('facturation_adresse','');
+			set_request('facturation_adresse_cp','');
+			set_request('facturation_adresse_ville','');
+			set_request('facturation_adresse_pays','');
+			set_request('facturation_telephone','');
+		}
+
+
 		include_spip('inc/editer');
 		$res = formulaires_editer_objet_traiter('commande', $id_commande);
 		// mettre a jour le cout de livraison existant
