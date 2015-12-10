@@ -160,6 +160,7 @@ function formulaires_adresser_commande_traiter_dist($id_commande, $url_suite='',
 		// adresse de facturation identique a la livraison ? on laisse vide
 		if (_request('facturation_identique_livraison')==='oui'){
 			set_request('facturation_nom','');
+			set_request('facturation_societe','');
 			set_request('facturation_adresse','');
 			set_request('facturation_adresse_cp','');
 			set_request('facturation_adresse_ville','');

@@ -33,25 +33,46 @@
 		<input type='submit' class='submit offscreen over' name="save" value='<:bouton_enregistrer:>' />
 
 		#SET{modif,#ENV{modif,''}}
-		<h3><span><:livraison:titre_votre_adresse_livraison:></span>
-			[(#FACTURATION_NOM|non|et{#GET{modif}|non})
-      <br /><small><i>Facturation à la même adresse</i></small>
-      ]
-		</h3>
-
-    <div class="profil_show[(#GET{modif}|oui)hide]">
-	    <button class="btn btn-small modifier right"
-		    name="modif" value="modif"><i class="icon-pencil"></i> <:livraison:bouton_modifier_adresse:></button>
-		  <p>
-			  [<strong>(#LIVRAISON_NOM)</strong><br />]
-			  [(#LIVRAISON_SOCIETE)<br />]
-			  [(#LIVRAISON_ADRESSE|nl2br)<br />]
-			  [(#LIVRAISON_ADRESSE_CP|concat{' ',#LIVRAISON_ADRESSE_VILLE}|trim)<br />]
-			  <BOUCLE_pays_code(PAYS){code=#LIVRAISON_ADRESSE_PAYS}>#NOM<br /></BOUCLE_pays_code>
-			  [<br /><i>Tel&nbsp;:</i> (#LIVRAISON_TELEPHONE)<br />]
-		  </p>
+    <div class="profil_show clearfix[(#GET{modif}|oui)hide]">
+	    [(#FACTURATION_NOM|oui)
+	    <div class="row-fluid">
+		    <div class="span6">
+	    ]
+		    <h3><span><:livraison:titre_votre_adresse_livraison:></span>
+		        [(#FACTURATION_NOM|non)<br /><small><i>Facturation à la même adresse</i></small>]
+		      </h3>
+		    [(#FACTURATION_NOM|non)
+		    <button class="btn btn-small modifier right"
+			    name="modif" value="modif"><i class="icon-pencil"></i> <:livraison:bouton_modifier_adresse:></button>
+		    ]
+			  <p>
+				  [<strong>(#LIVRAISON_NOM)</strong><br />]
+				  [(#LIVRAISON_SOCIETE)<br />]
+				  [(#LIVRAISON_ADRESSE|nl2br)<br />]
+				  [(#LIVRAISON_ADRESSE_CP|concat{' ',#LIVRAISON_ADRESSE_VILLE}|trim)<br />]
+				  <BOUCLE_pays_code(PAYS){code=#LIVRAISON_ADRESSE_PAYS}>#NOM<br /></BOUCLE_pays_code>
+				  [<br /><i>Tel&nbsp;:</i> (#LIVRAISON_TELEPHONE)<br />]
+			  </p>
+		    <BOUCLE_si(CONDITION){si #FACTURATION_NOM}>
+		    </div>
+		    <div class="span6">
+		    <h3><span><:livraison:titre_votre_adresse_facturation:></span></h3>
+		    <p>
+				  [<strong>(#FACTURATION_NOM)</strong><br />]
+				  [(#FACTURATION_SOCIETE)<br />]
+				  [(#FACTURATION_ADRESSE|nl2br)<br />]
+				  [(#FACTURATION_ADRESSE_CP|concat{' ',#FACTURATION_ADRESSE_VILLE}|trim)<br />]
+				  <BOUCLE_pays_code2(PAYS){code=#FACTURATION_ADRESSE_PAYS}>#NOM<br /></BOUCLE_pays_code2>
+				  [<br /><i>Tel&nbsp;:</i> (#FACTURATION_TELEPHONE)<br />]
+			  </p>
+		    </div>
+	    </div>
+		    <button class="btn btn-small modifier right"
+			    name="modif" value="modif"><i class="icon-pencil"></i> <:livraison:bouton_modifier_adresses:></button>
+		    </BOUCLE_si>
     </div>
     <div class="profil_modif[(#GET{modif}|non)hide]">
+	    <h3><span><:livraison:titre_votre_adresse_livraison:></span></h3>
       <p class="small"><:livraison:explication_privacy_info_perso:></p>
 	    <ul class="editer-groupe">
         <INCLURE{fond=formulaires/inc-editer-adresse-livraison,env,prefixe='livraison_'} />

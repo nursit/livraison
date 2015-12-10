@@ -16,10 +16,11 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_telephone' => 'Téléphone',
 	'label_adresse_livraison_commande' => 'Adresse de livraison',
 	'label_adresse_facturation_commande' => 'Adresse de facturation',
-	'label_adresse_facturation_identique' => 'Utiliser cette adresse pour la facture',
+	'label_adresse_facturation_identique' => 'Utiliser la même adresse pour la facture',
 
 
 	'bouton_modifier_adresse' => 'Modifier l\'adresse',
+	'bouton_modifier_adresses' => 'Modifier les adresses',
 	'bouton_choix_mode' => 'Choisir la livraison par @mode@ pour @prix@',
 	'bouton_suite' => 'Suite',
 
