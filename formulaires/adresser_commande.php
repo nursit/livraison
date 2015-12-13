@@ -95,7 +95,8 @@ function formulaires_adresser_commande_charger_dist($id_commande, $url_suite='',
 		// si un seul mode possible l'affecter directement sans passer par l'etape choix du mode
 		if (count($valeurs['_id_livraisonmode'])==1 AND !$valeurs['modif']){
 			include_spip('inc/livraison');
-			fixer_livraison_commande($id_commande,reset(array_keys($valeurs['_id_livraisonmode'])));
+			$arg = array_keys($valeurs['_id_livraisonmode']);
+			fixer_livraison_commande($id_commande,reset($arg));
 		}
 	}
 
