@@ -3,7 +3,7 @@
 	categorie="divers"
 	version="2.0.0"
 	etat="test"
-	compatibilite="[3.0.0;3.0.*]"
+	compatibilite="[3.0.0;3.1.*]"
 	logo="prive/themes/spip/images/livraison-32.png"
 	documentation=""
 	schema="1.2.0"
@@ -19,7 +19,7 @@
 	<licence>GNU/GPL</licence>
 	<necessite nom="saisies"  compatibilite="[1.24.0;]" /> 
 	<necessite nom="commandes" compatibilite="[1.6.13;]" />
-
+    <necessite nom="pays" compatibilite="[3.1.13;]" />
 
 	<pipeline nom="autoriser" inclure="livraison_autorisations.php" /> 
 	<pipeline nom="afficher_contenu_objet" inclure="livraison_pipelines.php" />
