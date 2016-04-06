@@ -1,7 +1,7 @@
 <paquet
 	prefix="livraison"
 	categorie="divers"
-	version="2.1.0"
+	version="2.1.1"
 	etat="test"
 	compatibilite="[3.0.0;3.1.*]"
 	logo="prive/themes/spip/images/livraison-32.png"

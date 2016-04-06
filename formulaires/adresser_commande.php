@@ -33,17 +33,19 @@ function formulaires_adresser_commande_charger_dist($id_commande, $url_suite='',
 	);
 
 	// si une des infos est manquante, ouvrir le formulaire en edition de l'adresse
+	$search_adresse = false;
 	if (!$valeurs['livraison_nom']
 		OR !$valeurs['livraison_adresse']
 		OR !$valeurs['livraison_adresse_cp']
 		OR !$valeurs['livraison_adresse_ville']
 		OR !$valeurs['livraison_adresse_pays']){
 		$valeurs['modif'] = ' ';
+		$search_adresse = true;
 	}
 
 	// si aucune info adresse est renseignee dans la commande,
 	// on recupere l'adresse depuis l'auteur si possible pour pre-remplir le formulaire
-	if (!strlen(trim(implode('',$valeurs)))
+	if ($search_adresse
 	  AND $commande['id_auteur']
 	  AND $renseigner_adresse_auteur = charger_fonction("renseigner_adresse_auteur","inc",true)){
 		if ($adresse = $renseigner_adresse_auteur($commande['id_auteur'])){
@@ -60,6 +62,22 @@ function formulaires_adresser_commande_charger_dist($id_commande, $url_suite='',
 			}
 		}
 	}
+	// sinon chercher dans une commande precedente ?
+	if ($search_adresse
+		AND (!$valeurs['livraison_nom']
+		OR !$valeurs['livraison_adresse']
+		OR !$valeurs['livraison_adresse_cp']
+		OR !$valeurs['livraison_adresse_ville']
+		OR !$valeurs['livraison_adresse_pays'])
+	  AND $commande['id_auteur']
+		AND $row = sql_fetsel('livraison_nom,livraison_societe,livraison_adresse,livraison_adresse_cp,livraison_adresse_ville,livraison_adresse_pays,livraison_telephone','spip_commandes','id_auteur='.intval($commande['id_auteur'])." AND livraison_adresse<>''","","date DESC","0,1")){
+		foreach($row as $k=>$v){
+			if (isset($row[$k]) AND $row[$k]){
+				$valeurs[$k] = $row[$k];
+			}
+		}
+	}
+
 
 	// l'adresse de facturation, qui peut etre vide
 	// (dans ce cas on considere qu'elle est identique a la livraison)
