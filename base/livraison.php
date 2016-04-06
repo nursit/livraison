@@ -48,6 +48,7 @@ function livraison_declarer_tables_objets_sql($tables) {
 			"titre"              => "text NOT NULL DEFAULT ''",
 			"descriptif"         => "longtext NOT NULL DEFAULT ''",
 			"zone_pays"          => "text NOT NULL DEFAULT ''",
+			"zone_pays_exclus"   => "text NOT NULL DEFAULT ''",
 			"zone_cp"            => "text NOT NULL DEFAULT ''",
 			"zone_cp_exclus"     => "text NOT NULL DEFAULT ''",
 			"taxe"               => "varchar(25) NOT NULL DEFAULT ''",

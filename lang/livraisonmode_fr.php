@@ -25,6 +25,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'champ_zone_cp_exclus_label' => 'Départements exclus',
 	'champ_zone_cp_explication' => 'Si la livraison est limitée à certains départements/états, liste des débuts de code postaux livrables par ce mode, séparés par une virgule (Ex : <tt>971,973</tt> pour limiter à la Guadeloupe et la Guyanne)',
 	'champ_zone_cp_label' => 'Départements livrés',
+	'champ_zone_pays_exclus_label' => 'Pays exclus',
+	'champ_zone_pays_exclus_explication' => 'Si la livraison est impossible dans certains pays, liste des codes pays ISO non livrables par ce mode, séparés par une virgule',
 	'champ_zone_pays_explication' => 'Liste des codes pays ISO livrables par ce mode, séparés par une virgule',
 	'champ_zone_pays_label' => 'Pays livrables',
 

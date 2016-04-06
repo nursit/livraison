@@ -25,7 +25,9 @@ function livraison_poids_volume_bareme_from_string($bareme_str){
 	$bareme = array();
 	foreach($t as $i){
 		$i = explode("|",$i);
-		$bareme[trim(reset($i))] = floatval(trim(end($i)));
+		$unite = trim(reset($i));
+		$cout = trim(end($i));
+		$bareme[$unite] = (($cout==="NA" OR $cout==="N/A")?false:floatval(trim(end($i))));
 	}
 	return $bareme;
 }
@@ -69,6 +71,15 @@ function livraison_calculer_cout($id_commande,$id_livraisonmode,$pays,$code_post
 		$zone_pays = explode(',',$mode['zone_pays']);
 		$zone_pays = array_map('trim',$zone_pays);
 		if (!in_array($pays,$zone_pays)){
+			return false;
+		}
+	}
+
+	// verifier que le pays n'est pas dans la zone_pays_exclus eventuelle
+	if (strlen($mode['zone_pays_exclus'])){
+		$zone_pays_exclus = explode(',',$mode['zone_pays_exclus']);
+		$zone_pays_exclus = array_map('trim',$zone_pays_exclus);
+		if (in_array($pays,$zone_pays_exclus)){
 			return false;
 		}
 	}

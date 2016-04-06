@@ -38,6 +38,9 @@ function livraison_upgrade($nom_meta_base_version, $version_cible) {
 	$maj['1.2.0'] = array(
 		array('maj_tables', array('spip_commandes')),
 	);
+	$maj['1.3.0'] = array(
+		array('maj_tables', array('spip_commandes')),
+	);
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
