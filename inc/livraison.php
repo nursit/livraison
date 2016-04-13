@@ -179,6 +179,31 @@ function reset_livraison_commande($id_commande){
 }
 
 /**
+ * Verifier si une commande necessite une livraison ou pas
+ * @param $id_commande
+ * @return bool
+ */
+function commande_livraison_necessaire($id_commande){
+	static $livrable = array();
+	if (isset($livrable[$id_commande])){
+		return $livrable[$id_commande];
+	}
+	$items = sql_allfetsel("*","spip_commandes_details","id_commande=".intval($id_commande));
+	$livrable[$id_commande] = false;
+	foreach($items as $item){
+		$table = table_objet_sql($item['objet']);
+		$primary = id_table_objet($item['objet']);
+		$objet = sql_fetsel("*",$table,"$primary=".intval($item['id_objet']));
+		if (!isset($objet['immateriel']) OR !$objet['immateriel']){
+			$livrable[$id_commande] = true;
+			break;
+		}
+	}
+	return $livrable[$id_commande];
+}
+
+
+/**
  * Ajouter/mettre a jout le mode et le cout de livraison de la commande
  * @param int $id_commande
  * @param int $id_livraisonmode

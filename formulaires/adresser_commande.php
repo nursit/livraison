@@ -97,8 +97,10 @@ function formulaires_adresser_commande_charger_dist($id_commande, $url_suite='',
 	$valeurs['_url_suite'] = $url_suite;
 	$valeurs['_titre_suite'] = $titre_suite;
 	$valeurs['_id_livraisonmode'] = array();
+	include_spip('inc/livraison');
+	$valeurs['_livraison_necessaire'] = (commande_livraison_necessaire($id_commande)?' ':'');
 
-	if (!$valeurs['modif']) {
+	if (!$valeurs['modif'] AND $valeurs['_livraison_necessaire']) {
 		// trouver les modes de livraison dispo et leurs prix, en fonction de l'adresse
 		include_spip('inc/livraison');
 		$ids = sql_allfetsel("id_livraisonmode","spip_livraisonmodes","statut=".sql_quote('publie'));
