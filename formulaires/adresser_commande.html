@@ -1,6 +1,5 @@
 <div class='formulaire_spip formulaire_editer formulaire_#FORM formulaire_#FORM-#ENV{id_commande,nouveau}'>
 
-
 	<BOUCLE_commande(COMMANDES){id_commande=#ENV{_id_commande}}{statut?}>
 	<div class='recapitulatif-commande p'>
 		<div class="row-fluid">
@@ -49,26 +48,12 @@
 		    <button class="btn btn-small modifier right"
 			    name="modif" value="modif"><i class="icon-pencil"></i> <:livraison:bouton_modifier_adresse:></button>
 		    ]
-			  <p>
-				  [<strong>(#LIVRAISON_NOM)</strong><br />]
-				  [(#LIVRAISON_SOCIETE)<br />]
-				  [(#LIVRAISON_ADRESSE|nl2br)<br />]
-				  [(#LIVRAISON_ADRESSE_CP|concat{' ',#LIVRAISON_ADRESSE_VILLE}|trim)<br />]
-				  <BOUCLE_pays_code(PAYS){code=#LIVRAISON_ADRESSE_PAYS}>#NOM<br /></BOUCLE_pays_code>
-				  [<br /><i>Tel&nbsp;:</i> (#LIVRAISON_TELEPHONE)<br />]
-			  </p>
+			  <INCLURE{fond=formulaires/inc-afficher-adresse-livraison,env} />
 		    <BOUCLE_si(CONDITION){si #FACTURATION_NOM|et{#ENV{_livraison_necessaire}|oui}}>
 		    </div>
 		    <div class="span6">
 		    <h3><span><:livraison:titre_votre_adresse_facturation:></span></h3>
-		    <p>
-				  [<strong>(#FACTURATION_NOM)</strong><br />]
-				  [(#FACTURATION_SOCIETE)<br />]
-				  [(#FACTURATION_ADRESSE|nl2br)<br />]
-				  [(#FACTURATION_ADRESSE_CP|concat{' ',#FACTURATION_ADRESSE_VILLE}|trim)<br />]
-				  <BOUCLE_pays_code2(PAYS){code=#FACTURATION_ADRESSE_PAYS}>#NOM<br /></BOUCLE_pays_code2>
-				  [<br /><i>Tel&nbsp;:</i> (#FACTURATION_TELEPHONE)<br />]
-			  </p>
+		    <INCLURE{fond=formulaires/inc-afficher-adresse-facturation,env} />
 		    </div>
 	    </div>
 		    <button class="btn btn-small modifier right"
