@@ -131,6 +131,7 @@ function formulaires_adresser_commande_verifier_dist($id_commande, $url_suite=''
 
 	if (_request('modif')){
 		$erreurs['dummy'] = ' '; // forcer la resaisie en mode modification
+		$erreurs['message_erreur'] = '';
 		// vider ce get pour retomber sur la valeur par defaut
 		set_request('facturation_identique_livraison');
 		return $erreurs;

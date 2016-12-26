@@ -45,7 +45,7 @@
 		    <h3><span><:livraison:titre_votre_adresse_facturation:></span></h3>
 		    ]
 		    [(#FACTURATION_NOM|non)
-		    <button class="btn btn-small modifier right"
+		    <button class="btn btn-small modifier right" type="submit"
 			    name="modif" value="modif"><i class="icon-pencil"></i> <:livraison:bouton_modifier_adresse:></button>
 		    ]
 			  <INCLURE{fond=formulaires/inc-afficher-adresse-livraison,env} />
@@ -56,7 +56,7 @@
 		    <INCLURE{fond=formulaires/inc-afficher-adresse-facturation,env} />
 		    </div>
 	    </div>
-		    <button class="btn btn-small modifier right"
+		    <button class="btn btn-small modifier right" type="submit"
 			    name="modif" value="modif"><i class="icon-pencil"></i> <:livraison:bouton_modifier_adresses:></button>
 		    </BOUCLE_si>
     </div>
