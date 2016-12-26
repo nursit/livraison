@@ -1,0 +1,8 @@
+<p>
+[<strong>(#LIVRAISON_NOM)</strong><br />]
+[(#LIVRAISON_SOCIETE)<br />]
+[(#LIVRAISON_ADRESSE|nl2br)<br />]
+[(#LIVRAISON_ADRESSE_CP|concat{' ',#LIVRAISON_ADRESSE_VILLE}|trim)<br />]
+<BOUCLE_pays_code(PAYS){code=#LIVRAISON_ADRESSE_PAYS}>#NOM<br /></BOUCLE_pays_code>
+[<br /><i>Tel&nbsp;:</i> (#LIVRAISON_TELEPHONE)<br />]
+</p>
