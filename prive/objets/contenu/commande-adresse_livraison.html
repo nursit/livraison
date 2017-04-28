@@ -1,9 +1,11 @@
 <BOUCLE_cde(COMMANDES){id_commande}{statut?}>
-[(#LIVRAISON_NOM|oui)
+[(#LIVRAISON_NOM|ou{#FACTURATION_NOM}|oui)
 <div class="champ contenu_descriptif">
 	<div class="demi left" style="float:left;width: 45%;">
+		[(#LIVRAISON_NOM|oui)
 		<div class="label"><:livraison:label_adresse_livraison_commande:> : </div>
 		<p>#MODELE{commande_adresse_livraison,id_commande}</p>
+		]
 	</div>
 	<div class="demi right" style="float:right;width: 45%;">
 		<div class="label"><:livraison:label_adresse_facturation_commande:> : </div>
