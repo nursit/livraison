@@ -223,7 +223,15 @@ function fixer_livraison_commande($id_commande,$id_livraisonmode=0){
 		return false;
 	}
 
-	$cout = livraison_calculer_cout($id_commande,$id_livraisonmode,$commande['livraison_adresse_pays'],$commande['livraison_adresse_cp']);
+	if ($commande['livraison_nom']) {
+		$pays = $commande['livraison_adresse_pays'];
+		$cp = $commande['livraison_adresse_cp'];
+	}
+	else {
+		$pays = $commande['facturation_adresse_pays'];
+		$cp = $commande['facturation_adresse_cp'];
+	}
+	$cout = livraison_calculer_cout($id_commande, $id_livraisonmode, $pays, $cp);
 
 	$n = sql_countsel("spip_commandes_details",$where);
 	// enlever les modes de livraison deja existant si en trop
