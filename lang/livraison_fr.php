@@ -14,6 +14,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_adresse_ville' => 'Ville',
 	'label_adresse_pays' => 'Pays',
 	'label_telephone' => 'Téléphone',
+	'label_no_tva_intra' => 'N° TVA Intracommunautaire',
 	'label_adresse_livraison_commande' => 'Adresse de livraison',
 	'label_adresse_facturation_commande' => 'Adresse de facturation',
 	'label_adresse_facturation_identique' => 'Utiliser la même adresse pour la facture',

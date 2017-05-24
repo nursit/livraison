@@ -68,7 +68,7 @@
 	    ]
       <p class="small"><:livraison:explication_privacy_info_perso:></p>
 	    <ul class="editer-groupe">
-        <INCLURE{fond=formulaires/inc-editer-adresse-livraison,env,prefixe='livraison_'} />
+        <INCLURE{fond=formulaires/inc-editer-adresse-livraison,env} />
 		    [(#ENV{_livraison_necessaire}|oui)
 		    #SET{name,facturation_identique_livraison}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
 				<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
@@ -86,7 +86,7 @@
 			    <fieldset>
 				    <legend class="h3"><:livraison:titre_votre_adresse_facturation:></legend>
 				    <ul class="editer-groupe">
-					    <INCLURE{fond=formulaires/inc-editer-adresse-livraison,env,prefixe='facturation_'} />
+					    <INCLURE{fond=formulaires/inc-editer-adresse-facturation,env} />
 				    </ul>
 			    </fieldset>
 		    </li>

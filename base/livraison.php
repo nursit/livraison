@@ -106,6 +106,7 @@ function livraison_declarer_tables_objets_sql($tables) {
 	$tables['spip_commandes']['field']['facturation_adresse_ville'] =	"varchar(100) NOT NULL DEFAULT ''";
 	$tables['spip_commandes']['field']['facturation_adresse_pays'] =	"varchar(5) NOT NULL DEFAULT ''";
 	$tables['spip_commandes']['field']['facturation_telephone'] =	"varchar(25) NOT NULL DEFAULT ''";
+	$tables['spip_commandes']['field']['facturation_no_tva_intra'] =	"varchar(25) NOT NULL DEFAULT ''";
 	$tables['spip_commandes']['champs_editables'][] = 'livraison_nom';
 	$tables['spip_commandes']['champs_editables'][] = 'livraison_societe';
 	$tables['spip_commandes']['champs_editables'][] = 'livraison_adresse';
@@ -127,6 +128,7 @@ function livraison_declarer_tables_objets_sql($tables) {
 	$tables['spip_commandes']['champs_editables'][] = 'facturation_adresse_ville';
 	$tables['spip_commandes']['champs_editables'][] = 'facturation_adresse_pays';
 	$tables['spip_commandes']['champs_editables'][] = 'facturation_telephone';
+	$tables['spip_commandes']['champs_editables'][] = 'facturation_no_tva_intra';
 	$tables['spip_commandes']['champs_versionnes'][] = 'facturation_nom';
 	$tables['spip_commandes']['champs_versionnes'][] = 'facturation_societe';
 	$tables['spip_commandes']['champs_versionnes'][] = 'facturation_adresse';
@@ -134,6 +136,7 @@ function livraison_declarer_tables_objets_sql($tables) {
 	$tables['spip_commandes']['champs_versionnes'][] = 'facturation_adresse_ville';
 	$tables['spip_commandes']['champs_versionnes'][] = 'facturation_adresse_pays';
 	$tables['spip_commandes']['champs_versionnes'][] = 'facturation_telephone';
+	$tables['spip_commandes']['champs_versionnes'][] = 'facturation_no_tva_intra';
 
 	return $tables;
 }

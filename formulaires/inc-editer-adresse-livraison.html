@@ -1,17 +1,18 @@
 #SET{fl,livraison}
-#SET{name_short,nom}#SET{name,#ENV{prefixe,''}#GET{name_short}}#SET{obli,'obigatoire'}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+#SET{prefixe,#ENV{prefixe,'livraison_'}}
+#SET{name_short,nom}#SET{name,#GET{prefixe}#GET{name_short}}#SET{obli,'obigatoire'}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
 <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 	<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name_short}}|_T)][(#GET{obli}|oui)<b><:info_obligatoire_02:></b>]</label>[
 	<span class='erreur_message'>(#GET{erreurs})</span>
 	]<input type="text" class="text" name="#GET{name}" value="#ENV*{#GET{name}}" id="#GET{name}"/>
 </li>
-#SET{name_short,societe}#SET{name,#ENV{prefixe,''}#GET{name_short}}#SET{obli,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+#SET{name_short,societe}#SET{name,#GET{prefixe}#GET{name_short}}#SET{obli,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
 <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 	<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name_short}}|_T)][(#GET{obli}|oui)<b><:info_obligatoire_02:></b>]</label>[
 	<span class='erreur_message'>(#GET{erreurs})</span>
 	]<input type="text" class="text" name="#GET{name}" value="#ENV*{#GET{name}}" id="#GET{name}"/>
 </li>
-#SET{name_short,adresse}#SET{name,#ENV{prefixe,''}#GET{name_short}}#SET{obli,'obligatoire'}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+#SET{name_short,adresse}#SET{name,#GET{prefixe}#GET{name_short}}#SET{obli,'obligatoire'}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
  <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
    <label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name_short}}|_T)][(#GET{obli}|oui)<b><:info_obligatoire_02:></b>]</label>[
    <span class='erreur_message'>(#GET{erreurs})</span>
@@ -21,7 +22,7 @@
 <li class="editer editer_cp_ville">
 	<div class="row-fluid">
 		<div class="span5">
-			#SET{name_short,adresse_cp}#SET{name,#ENV{prefixe,''}#GET{name_short}}#SET{obli,'obligatoire'}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+			#SET{name_short,adresse_cp}#SET{name,#GET{prefixe}#GET{name_short}}#SET{obli,'obligatoire'}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
 			<div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 				<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name_short}}|_T)][(#GET{obli}|oui)<b><:info_obligatoire_02:></b>]</label>[
 				<span class='erreur_message'>(#GET{erreurs})</span>
@@ -29,7 +30,7 @@
 			</div>
 		</div>
 		<div class="span7">
-			#SET{name_short,adresse_ville}#SET{name,#ENV{prefixe,''}#GET{name_short}}#SET{obli,'obligatoire'}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+			#SET{name_short,adresse_ville}#SET{name,#GET{prefixe}#GET{name_short}}#SET{obli,'obligatoire'}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
 			<div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 				<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name_short}}|_T)][(#GET{obli}|oui)<b><:info_obligatoire_02:></b>]</label>[
 				<span class='erreur_message'>(#GET{erreurs})</span>
@@ -38,8 +39,8 @@
 		</div>
 	</div>
 </li>
-[(#SAISIE{pays,#ENV{prefixe,''}adresse_pays, code_pays=oui,champs_pays=code, label=<:livraison:label_adresse_pays:>,defaut=FR})]
-#SET{name_short,telephone}#SET{name,#ENV{prefixe,''}#GET{name_short}}#SET{obli,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+[(#SAISIE{pays,#GET{prefixe}adresse_pays, code_pays=oui,champs_pays=code, label=<:livraison:label_adresse_pays:>,defaut=FR})]
+#SET{name_short,telephone}#SET{name,#GET{prefixe}#GET{name_short}}#SET{obli,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
 <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 	<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name_short}}|_T)][(#GET{obli}|oui)<b><:info_obligatoire_02:></b>]</label>[
 	<span class='erreur_message'>(#GET{erreurs})</span>

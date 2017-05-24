@@ -5,4 +5,5 @@
 [(#FACTURATION_ADRESSE_CP|concat{' ',#FACTURATION_ADRESSE_VILLE}|trim)<br />]
 <BOUCLE_pays_code2(PAYS){code=#FACTURATION_ADRESSE_PAYS}>#NOM<br /></BOUCLE_pays_code2>
 [<br /><i>Tel&nbsp;:</i> (#FACTURATION_TELEPHONE)<br />]
+[<br /><:livraison:label_no_tva_intra:> <br /><b>(#FACTURATION_NO_TVA_INTRA)</b>]
 </p>

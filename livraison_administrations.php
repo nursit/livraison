@@ -41,6 +41,10 @@ function livraison_upgrade($nom_meta_base_version, $version_cible) {
 	$maj['1.3.0'] = array(
 		array('maj_tables', array('spip_commandes')),
 	);
+	// ajout champ facturation_no_tva_intra
+	$maj['1.3.1'] = array(
+		array('maj_tables', array('spip_commandes')),
+	);
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
