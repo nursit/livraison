@@ -245,6 +245,8 @@ function fixer_livraison_commande($id_commande,$id_livraisonmode=0){
 	if (!$cout) return false;
 
 	$mode = sql_getfetsel("titre","spip_livraisonmodes","id_livraisonmode=".intval($id_livraisonmode));
+	include_spip('inc/texte');
+	$mode = typo($mode);
 	// et en inserer 1 si besoin
 	if (!$n){
 		$set = array(
