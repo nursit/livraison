@@ -1,12 +1,12 @@
 <paquet
 	prefix="livraison"
 	categorie="divers"
-	version="2.4.2"
+	version="2.5.0"
 	etat="test"
 	compatibilite="[3.0.0;3.1.*]"
 	logo="prive/themes/spip/images/livraison-32.png"
 	documentation=""
-	schema="1.3.1"
+	schema="1.4.0"
 >
 
 	<nom>Livraison</nom>
@@ -16,13 +16,15 @@
 	<licence>GNU/GPL</licence>
 	<necessite nom="saisies"  compatibilite="[1.24.0;]" /> 
 	<necessite nom="commandes" compatibilite="[1.6.13;]" />
-    <necessite nom="pays" compatibilite="[3.1.3;]" />
+	<necessite nom="pays" compatibilite="[3.1.3;]" />
 
 	<pipeline nom="autoriser" inclure="livraison_autorisations.php" /> 
 	<pipeline nom="afficher_contenu_objet" inclure="livraison_pipelines.php" />
+	<pipeline nom="affiche_milieu" inclure="livraison_pipelines.php" />
 
 	<pipeline nom="declarer_tables_objets_sql" inclure="base/livraison.php" /> 
 	<pipeline nom="declarer_tables_interfaces" inclure="base/livraison.php" /> 
+	<pipeline nom="declarer_tables_auxiliaires" inclure="base/livraison.php" />
 
 	<menu nom="livraisonmodes" titre="livraisonmode:titre_livraisonmodes" parent="menu_edition" icone="images/livraisonmode-16.png" action="livraisonmodes" /> 
 </paquet>

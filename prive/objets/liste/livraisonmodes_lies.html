@@ -1,0 +1,42 @@
+[(#SET{defaut_tri,#ARRAY{
+	multi titre,1,
+	date,-1, 
+	id_livraisonmode,1
+}})
+]
+#SET{selection,#ENV**{selection,#ENV{objet_source}|lister_objets_lies{#ENV{objet},#ENV{id_objet},#ENV{_objet_lien}}}}
+<B_liste_livraisonmodes>
+#ANCRE_PAGINATION
+<div class="liste-objets liste-objets-lies livraisonmodes">
+<table class="spip liste">
+[<caption><strong class="caption">(#ENV*{titre,#GRAND_TOTAL|singulier_ou_pluriel{livraisonmode:info_1_livraisonmode,livraisonmode:info_nb_livraisonmodes}})</strong></caption>]
+	<thead>
+		<tr class="first_row">
+			<th class="statut" scope="col">[(#TRI{statut,<span title="<:lien_trier_statut|attribut_html:>">#</span>,ajax})]</th> 
+			<th class="titre" scope="col">[(#TRI{multi titre,<:livraisonmode:champ_titre_label:>,ajax})]</th>
+			<th class="action" scope="col"></th>
+		</tr>
+	</thead>
+	<tbody>
+	<BOUCLE_liste_livraisonmodes(LIVRAISONMODES){id_livraisonmode IN #GET{selection}}{statut?}
+		{tri #ENV{par,multi titre},#GET{defaut_tri}}{pagination #ENV{nb,10} livl}>
+		<tr class="[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})][ (#EXPOSE|unique)][ (#TITRE**|extraire_multi|initiale|=={#ENV{i}}|?{on}|unique)][(#ID_LIVRAISONMODE|=={#ENV{id_lien_ajoute}}|oui)append]">
+			<td class="statut">[(#STATUT|puce_statut{livraisonmode})]</td>
+			<td class="titre">[(#LOGO_LIVRAISONMODE|image_reduire{20,20})]<a href="[(#ID_LIVRAISONMODE|generer_url_entite{livraisonmode})]">#TITRE</a></td>
+			<td class="action">
+				[(#ENV{editable}|oui)
+					<button type="submit" class="button link delete" name="supprimer_lien\[livraisonmode-#ID_LIVRAISONMODE-#OBJET-#ID_OBJET\]" value="X"><:livraisonmode:retirer_lien_livraisonmode:> [(#CHEMIN_IMAGE{supprimer-12.png}|balise_img{'X'})]</button>
+				]
+			</td>
+		</tr>
+	</BOUCLE_liste_livraisonmodes>
+	</tbody>
+</table>
+[<p class="pagination">(#PAGINATION{prive})</p>]
+[(#GRAND_TOTAL|>{3}|oui)<div class="action"><button type="submit" class="button link" name="supprimer_lien\[livraisonmode-*-#OBJET-#ID_OBJET\]" value="X"><:livraisonmode:retirer_tous_liens_livraisonmodes:> [(#CHEMIN_IMAGE{supprimer-8.png}|balise_img{'X'})]</button></div>]
+</div>
+</B_liste_livraisonmodes>
+<div class="liste-objets liste-objets-lies livraisonmodes caption-wrap">
+	<strong class="caption">[(#ENV*{titre,<:livraisonmode:info_aucun_livraisonmode:>})]</strong>
+</div>
+<//B_liste_livraisonmodes>

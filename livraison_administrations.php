@@ -25,7 +25,7 @@ function livraison_upgrade($nom_meta_base_version, $version_cible) {
 	$maj = array();
 
 	$maj['create'] = array(
-		array('maj_tables', array('spip_livraisonmodes','spip_commandes')),
+		array('maj_tables', array('spip_livraisonmodes','spip_livraisonmodes_liens','spip_commandes')),
 		array('livraison_installer_modes'),
 	);
 
@@ -44,6 +44,11 @@ function livraison_upgrade($nom_meta_base_version, $version_cible) {
 	// ajout champ facturation_no_tva_intra
 	$maj['1.3.1'] = array(
 		array('maj_tables', array('spip_commandes')),
+	);
+
+	// ajout table des liens pour limiter certains modes a certains produits
+	$maj['1.4.0'] = array(
+		array('maj_tables', array('spip_livraisonmodes_liens')),
 	);
 
 	include_spip('base/upgrade');

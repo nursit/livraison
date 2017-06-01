@@ -24,6 +24,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 function livraison_declarer_tables_interfaces($interfaces) {
 
 	$interfaces['table_des_tables']['livraisonmodes'] = 'livraisonmodes';
+	$interfaces['table_des_tables']['livraisonmodes_liens'] = 'livraisonmodes_liens';
 
 	return $interfaces;
 }
@@ -69,7 +70,7 @@ function livraison_declarer_tables_objets_sql($tables) {
 		'champs_editables'  => array('titre', 'descriptif', 'zone_pays', 'zone_pays_exclus', 'zone_cp', 'zone_cp_exclus', 'taxe', 'prix_forfait_ht', 'prix_unit_ht', 'prix_poids_ht', 'prix_volume_ht'),
 		'champs_versionnes' => array('titre', 'descriptif', 'zone_pays', 'zone_pays_exclus', 'zone_cp', 'zone_cp_exclus', 'taxe', 'prix_forfait_ht', 'prix_unit_ht', 'prix_poids_ht', 'prix_volume_ht'),
 		'rechercher_champs' => array('titre'=>4,'descriptif'=>1),
-		'tables_jointures'  => array(),
+		'tables_jointures'  => array('spip_livraisonmodes_liens'),
 		'statut_textes_instituer' => array(
 			'prepa'    => 'texte_statut_en_cours_redaction',
 			'prop'     => 'texte_statut_propose_evaluation',
@@ -142,5 +143,28 @@ function livraison_declarer_tables_objets_sql($tables) {
 }
 
 
+/**
+ * Déclaration des tables secondaires (liaisons)
+ *
+ * @pipeline declarer_tables_auxiliaires
+ * @param array $tables
+ *     Description des tables
+ * @return array
+ *     Description complétée des tables
+ */
+function livraison_declarer_tables_auxiliaires($tables) {
 
-?>
+	$tables['spip_livraisonmodes_liens'] = array(
+		'field' => array(
+			'id_livraisonmode'     => 'bigint(21) DEFAULT "0" NOT NULL',
+			'id_objet'             => 'bigint(21) DEFAULT "0" NOT NULL',
+			'objet'                => 'VARCHAR(25) DEFAULT "" NOT NULL',
+		),
+		'key' => array(
+			'PRIMARY KEY'          => 'id_livraisonmode,id_objet,objet',
+			'KEY id_livraisonmode' => 'id_livraisonmode',
+		)
+	);
+
+	return $tables;
+}

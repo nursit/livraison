@@ -30,6 +30,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'champ_zone_pays_explication' => 'Liste des codes pays ISO livrables par ce mode, séparés par une virgule',
 	'champ_zone_pays_label' => 'Pays livrables',
 
+	// E
+	'explication_associer_livraisonmodes' => 'Associer des modes de livraisons si seuls certains modes sont possibles (par défaut tous les modes de livraison sont utilisables)',
+
 	// I
 	'icone_creer_livraisonmode' => 'Créer un mode de livraison',
 	'icone_modifier_livraisonmode' => 'Modifier ce mode de livraison',

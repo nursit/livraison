@@ -116,6 +116,16 @@ function livraison_calculer_cout($id_commande,$id_livraisonmode,$pays,$code_post
 	$prix = 0;
 	$taxe = 0;
 
+	// verifier que le mode est applicable a toutes les lignes de la commande
+	foreach($details as $detail){
+
+		// TODO : prevoir le multimode si certains modes ne sont applicables qu'a certains produits
+		if (!livraison_applicable($detail['objet'],$detail['id_objet'],$id_livraisonmode)) {
+			return false;
+		}
+	}
+
+
 	if (strlen($mode['taxe'])) {
 		$taxe = floatval($mode['taxe']);
 	}
@@ -170,6 +180,33 @@ function livraison_calculer_cout($id_commande,$id_livraisonmode,$pays,$code_post
 }
 
 /**
+ * Verifier qu'un mode est applicable a un objet de la commande
+ * @param string $objet
+ * @param int $id_objet
+ * @param int $id_livraisonmode
+ * @return bool
+ */
+function livraison_applicable($objet, $id_objet, $id_livraisonmode) {
+	// si l'objet est immateriel c'est OK pour la livraison
+	$table = table_objet_sql($objet);
+	$primary = id_table_objet($objet);
+	$data = sql_fetsel("*",$table,"$primary=".intval($id_objet));
+	if (!isset($data['immateriel']) OR $data['immateriel']){
+		return true;
+	}
+
+	$modespossibles = sql_allfetsel('id_livraisonmode','spip_livraisonmodes_liens','objet='.sql_quote($objet).' AND id_objet='.sql_quote($id_objet));
+	// si aucun mode associe a l'objet, tous les modes sont possibles, donc OK
+	if (count($modespossibles)) {
+		$modespossibles = array_map('reset', $modespossibles);
+		if (!in_array($id_livraisonmode, $modespossibles)) {
+			return false;
+		}
+	}
+	return true;
+}
+
+/**
  * Supprimer le mode de livraison d'une commande
  * @param $id_commande
  */
@@ -204,7 +241,7 @@ function commande_livraison_necessaire($id_commande){
 
 
 /**
- * Ajouter/mettre a jout le mode et le cout de livraison de la commande
+ * Ajouter/mettre a jour le mode et le cout de livraison de la commande
  * @param int $id_commande
  * @param int $id_livraisonmode
  *   si pas fourni on reprend celui deja existant pour une mise a jour du cout

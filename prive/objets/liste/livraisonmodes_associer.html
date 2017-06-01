@@ -1,0 +1,52 @@
+[(#SET{defaut_tri,#ARRAY{
+	multi titre,1,
+	date,-1, 
+	id_livraisonmode,1
+}})
+]
+#SET{exclus,#ENV**{exclus,#ENV{objet_source}|lister_objets_lies{#ENV{objet},#ENV{id_objet},#ENV{_objet_lien}}}}
+<B_liste_livraisonmodes>
+#ANCRE_PAGINATION
+<div class="liste-objets liste-objets-associer livraisonmodes">
+<table class="spip liste">
+[<caption><span class="caption"><strong>(#ENV*{titre,#GRAND_TOTAL|singulier_ou_pluriel{livraisonmode:info_1_livraisonmode,livraisonmode:info_nb_livraisonmodes}})</strong>
+<span class="recherche">
+	<label for="recherche-#ENV{id}"><:info_rechercher_02:></label>
+	<input type="text" class="recherche" name="recherche" id="recherche-#ENV{id}" value="#ENV{recherche}" />
+	<input type="submit" class="tout_voir" name="tout_voir" value="<:info_tout_afficher:>" />
+</span>
+</span>
+</caption>]
+	<thead>
+		<tr class="first_row">
+			<th class="statut" scope="col">[(#TRI{statut,<span title="<:lien_trier_statut|attribut_html:>">#</span>,ajax})]</th> 
+			<th class="titre" scope="col">[(#TRI{multi titre,<:livraisonmode:champ_titre_label:>,ajax})]</th>
+			<th class="action" scope="col"></th>
+		</tr>
+	</thead>
+	<tbody>
+	<BOUCLE_liste_livraisonmodes(LIVRAISONMODES){!id_livraisonmode IN #GET{exclus}}{where?}{recherche?}{statut?}
+		{tri #ENV{par,multi titre},#GET{defaut_tri}}{pagination #ENV{nb,10} liva}>
+		<tr class="[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})][ (#EXPOSE|unique)][ (#TITRE**|extraire_multi|initiale|=={#ENV{i}}|?{on}|unique)]">
+			<td class="statut">[(#STATUT|puce_statut{livraisonmode})]</td>
+			<td class="titre">[(#LOGO_LIVRAISONMODE|image_reduire{20,20})]<a href="[(#ID_LIVRAISONMODE|generer_url_entite{livraisonmode})]">#TITRE</a></td>
+			<td class="action">
+				<button type="submit" class="button link add" name="ajouter_lien\[livraisonmode-#ID_LIVRAISONMODE-#OBJET-#ID_OBJET\]" value="+"><:livraisonmode:ajouter_lien_livraisonmode:> [(#CHEMIN_IMAGE{ajouter-12.png}|balise_img{'+'})]</button>
+			</td>
+		</tr>
+	</BOUCLE_liste_livraisonmodes>
+	</tbody>
+</table>
+[<p class="pagination">(#PAGINATION{prive})</p>]
+</div>
+</B_liste_livraisonmodes>[(#ENV{recherche}|oui)
+<div class="liste-objets liste-objets-associer livraisonmodes caption-wrap">
+<span class="caption"><strong>[(#VAL{info_recherche_auteur_zero}|_T{#ARRAY{cherche_auteur,#ENV{recherche}}})]</strong>
+<span class="recherche">
+	<label for="recherche-#ENV{id}"><:info_rechercher_02:></label>
+	<input type="text" class="recherche" name="recherche" id="recherche-#ENV{id}" value="#ENV{recherche}" />
+	<input type="submit" class="tout_voir" name="tout_voir" value="<:info_tout_afficher:>" />
+</span>
+</span>
+</div>
+]<//B_liste_livraisonmodes>

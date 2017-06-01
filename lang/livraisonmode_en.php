@@ -30,6 +30,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'champ_zone_pays_explication' => 'List of ISO country codes available in this mode, separated by a comma',
 	'champ_zone_pays_label' => 'Delivered Countries',
 
+	// E
+	'explication_associer_livraisonmodes' => 'Link delivery methods if only certain methods are possible (otherwise all methods can be used)',
+
 	// I
 	'icone_creer_livraisonmode' => 'Create a delivery method',
 	'icone_modifier_livraisonmode' => 'Change this method of delivery',
