@@ -96,28 +96,22 @@ function formulaires_adresser_commande_charger_dist($id_commande, $url_suite='',
 	$valeurs['_id_commande'] = $id_commande;
 	$valeurs['_url_suite'] = $url_suite;
 	$valeurs['_titre_suite'] = $titre_suite;
-	$valeurs['_id_livraisonmode'] = array();
+	$valeurs['_choix_livraisonmode'] = array();
 	include_spip('inc/livraison');
 	$valeurs['_livraison_necessaire'] = (commande_livraison_necessaire($id_commande)?' ':'');
 
 	if (!$valeurs['modif'] AND $valeurs['_livraison_necessaire']) {
 		// trouver les modes de livraison dispo et leurs prix, en fonction de l'adresse
 		include_spip('inc/livraison');
-		$ids = sql_allfetsel("id_livraisonmode","spip_livraisonmodes","statut=".sql_quote('publie'));
-		$ids = array_map('reset',$ids);
-		foreach($ids as $id){
-			if ($cout = livraison_calculer_cout($id_commande,$id,$valeurs['livraison_adresse_pays'],$valeurs['livraison_adresse_cp'])){
-				list($prix_ht,$taxe) = $cout;
-				$valeurs['_id_livraisonmode'][$id] = round($prix_ht + $prix_ht * $taxe,2);
-			}
-		}
+		$valeurs['_choix_livraisonmode'] = commande_trouver_livraisons_possibles($id_commande, $valeurs['livraison_adresse_pays'], $valeurs['livraison_adresse_cp']);
 
 		// si un seul mode possible l'affecter directement sans passer par l'etape choix du mode
-		if (count($valeurs['_id_livraisonmode'])==1 AND !$valeurs['modif']){
+		if (count($valeurs['_choix_livraisonmode'])==1 AND !$valeurs['modif']){
 			include_spip('inc/livraison');
-			$arg = array_keys($valeurs['_id_livraisonmode']);
+			$arg = array_keys($valeurs['_choix_livraisonmode']);
 			fixer_livraison_commande($id_commande,reset($arg));
 		}
+
 	}
 
 	// gestion du cache
