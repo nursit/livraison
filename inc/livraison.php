@@ -53,13 +53,15 @@ function livraison_appliquer_bareme($mesure,$bareme){
 
 /**
  * Calculer le cout de livraison
- * @param $id_commande
- * @param $id_livraisonmode
- * @param $pays
- * @param $code_postal
+ * @param int $id_commande
+ * @param int $id_livraisonmode
+ * @param string $pays
+ * @param string $code_postal
+ * @param null|array $partiel
  * @return array|bool
  */
-function livraison_calculer_cout($id_commande,$id_livraisonmode,$pays,$code_postal){
+function livraison_calculer_cout($id_commande,$id_livraisonmode,$pays,$code_postal, $partiel = null){
+	$id_non_livres = array();
 
 	if (!$id_livraisonmode
 	  OR !$mode = sql_fetsel("*","spip_livraisonmodes","id_livraisonmode=".intval($id_livraisonmode))){
@@ -112,16 +114,26 @@ function livraison_calculer_cout($id_commande,$id_livraisonmode,$pays,$code_post
 	}
 
 	// OK on est dans le cas ou le mode s'applique a cette adresse
-	$details = sql_allfetsel("*","spip_commandes_details","id_commande=".intval($id_commande)." AND objet<>".sql_quote('livraisonmode'));
+	$where_partiel = '';
+	if ($partiel) {
+		$where_partiel = " AND ".sql_in('id_commandes_detail', $partiel);
+	}
+	$details = sql_allfetsel("*","spip_commandes_details","id_commande=".intval($id_commande)." AND objet<>".sql_quote('livraisonmode') . $where_partiel);
 	$prix = 0;
 	$taxe = 0;
 
 	// verifier que le mode est applicable a toutes les lignes de la commande
-	foreach($details as $detail){
-
-		// TODO : prevoir le multimode si certains modes ne sont applicables qu'a certains produits
+	foreach($details as $k => $detail){
+		// si on a fourni une liste $partiel des details a livrer,
+		// on accepte une livraison partielle en renvoyant la liste des id non livres
 		if (!livraison_applicable($detail['objet'],$detail['id_objet'],$id_livraisonmode)) {
-			return false;
+			if ($partiel) {
+				$id_non_livres[] = $detail['id_commandes_detail'];
+				unset($details[$k]);
+			}
+			else {
+				return false;
+			}
 		}
 	}
 
@@ -176,7 +188,7 @@ function livraison_calculer_cout($id_commande,$id_livraisonmode,$pays,$code_post
 
 	$prix = round($prix,2);
 
-	return array($prix,$taxe);
+	return array($prix, $taxe, $id_non_livres);
 }
 
 /**
@@ -241,22 +253,122 @@ function commande_livraison_necessaire($id_commande){
 
 
 /**
+ * Construire la liste des choix de livraison possible, si necessaire en combinant plusieurs livraisons
+ *
+ * @param int $id_commande
+ * @param string $pays
+ * @param string $code_postal
+ * @param null|array $partiel
+ * @param int $from_id_livraisonmode
+ * @return array
+ */
+function commande_trouver_livraisons_possibles($id_commande, $pays, $code_postal, $partiel = null, $from_id_livraisonmode = 0){
+
+	$choix_livraison = array();
+
+	// tous les modes de livraison disponibles
+	$id_livraisonmodes = sql_allfetsel("id_livraisonmode", "spip_livraisonmodes", "statut=" . sql_quote('publie') . ' AND id_livraisonmode>' . intval($from_id_livraisonmode), '', 'id_livraisonmode');
+	$id_livraisonmodes = array_map('reset', $id_livraisonmodes);
+
+	// d'abord on cherche des modes de livraison qui permettent de tout livrer d'un coup
+	// uniquement si pas sous ensemble $partiel fourni !
+	if (is_null($partiel)){
+		foreach ($id_livraisonmodes as $id_livraisonmode){
+			if ($cout = livraison_calculer_cout($id_commande, $id_livraisonmode, $pays, $code_postal)){
+				list($prix_ht, $taxe) = $cout;
+				$prix_ttc = round($prix_ht+$prix_ht*$taxe, 2);
+				$choix_livraison[$id_livraisonmode] = array(
+					'id' => $id_livraisonmode,
+					'prix_ht' => $prix_ht,
+					'prix_ttc' => $prix_ttc,
+					'decomposition' => array(
+						$id_livraisonmode => array(
+							'prix_ht' => $prix_ht,
+							'taxe' => $taxe,
+							'prix_ttc' => $prix_ttc,
+						)
+					)
+				);
+			}
+		}
+
+		// si on a trouve au moins un mode de livraison globale on arrete la
+		if (count($choix_livraison)){
+			return $choix_livraison;
+		}
+	}
+
+	// sinon on va chercher des combinaisons de mode de livraison par parties
+	$where_partiel = '';
+	if ($partiel){
+		$where_partiel = " AND " . sql_in('id_commandes_detail', $partiel);
+	}
+	$id_commandes_details = sql_allfetsel("id_commandes_detail", "spip_commandes_details", "id_commande=" . intval($id_commande) . " AND objet<>" . sql_quote('livraisonmode') . $where_partiel);
+	$id_commandes_details = array_map('reset', $id_commandes_details);
+	foreach ($id_livraisonmodes as $id_livraisonmode){
+		if ($cout = livraison_calculer_cout($id_commande, $id_livraisonmode, $pays, $code_postal, $id_commandes_details)){
+			list($prix_ht, $taxe, $id_non_livres) = $cout;
+			// chercher d'autres modes de livraison pour le restant
+			if ($id_non_livres){
+				$sous_choix = commande_trouver_livraisons_possibles($id_commande, $pays, $code_postal, $id_non_livres, $id_livraisonmode);
+				if (count($sous_choix)){
+					foreach ($sous_choix as $sous){
+						$id = explode(',', $sous['id']);
+						array_unshift($id, $id_livraisonmode);
+						$id = implode(',', $id);
+						$prix_ttc = round($prix_ht+$prix_ht*$taxe, 2);
+						$decomposition = array();
+						$decomposition[$id_livraisonmode] = array(
+							'prix_ht' => $prix_ht,
+							'taxe' => $taxe,
+							'prix_ttc' => $prix_ttc,
+						);
+						foreach ($sous['decomposition'] as $k=>$s) {
+							$decomposition[$k] = $s;
+						}
+						$choix_livraison[$id] = array(
+							'id' => $id,
+							'prix_ht' => $sous['prix_ht']+$prix_ht,
+							'prix_ttc' => $sous['prix_ttc']+$prix_ttc,
+							'decomposition' => $decomposition,
+						);
+					}
+				}
+			} // on arrive a livrer tout le restant d'un coup !
+			else {
+				$prix_ttc = round($prix_ht+$prix_ht*$taxe, 2);
+				$choix_livraison[$id_livraisonmode] = array(
+					'id' => $id_livraisonmode,
+					'prix_ht' => $prix_ht,
+					'prix_ttc' => $prix_ttc,
+					'decomposition' => array(
+						$id_livraisonmode => array(
+							'prix_ht' => $prix_ht,
+							'taxe' => $taxe,
+							'prix_ttc' => $prix_ttc,
+						)
+					)
+				);
+			}
+		}
+	}
+
+	return $choix_livraison;
+}
+
+
+/**
  * Ajouter/mettre a jour le mode et le cout de livraison de la commande
  * @param int $id_commande
  * @param int $id_livraisonmode
  *   si pas fourni on reprend celui deja existant pour une mise a jour du cout
  * @return bool
  */
-function fixer_livraison_commande($id_commande,$id_livraisonmode=0){
+function fixer_livraison_commande($id_commande, $id_livraisonmode=0){
 	$where = "id_commande=".intval($id_commande)." AND objet=".sql_quote('livraisonmode');
 
 	if (!$id_commande
 	  OR !$commande = sql_fetsel("*","spip_commandes","id_commande=".intval($id_commande))){
-		return false;
-	}
-
-	if (!$id_livraisonmode
-	  AND !$id_livraisonmode = sql_getfetsel("id_objet","spip_commandes_details",$where)){
 		return false;
 	}
 
@@ -268,48 +380,49 @@ function fixer_livraison_commande($id_commande,$id_livraisonmode=0){
 		$pays = $commande['facturation_adresse_pays'];
 		$cp = $commande['facturation_adresse_cp'];
 	}
-	$cout = livraison_calculer_cout($id_commande, $id_livraisonmode, $pays, $cp);
 
-	$n = sql_countsel("spip_commandes_details",$where);
-	// enlever les modes de livraison deja existant si en trop
-	// ou si le mode de livraison demande n'est pas possible (incompatible avec l'adresse de la commande)
-	if (!$cout OR $n>1){
-		sql_delete("spip_commandes_details",$where);
-		$n=0;
+	$choix_livraison = commande_trouver_livraisons_possibles($id_commande, $pays, $cp);
+
+	if (!$id_livraisonmode and count($choix_livraison) == 1) {
+		$id_livraisonmode = array_keys($choix_livraison);
+		$id_livraisonmode = reset($id_livraisonmode);
 	}
 
-	// si ce mode de livraison n'est pas possible on ne fait rien d'autre
-	if (!$cout) return false;
+	// pas de mode de livraison applicable ou incorrect : on sort de la
+	// en faisant reset sur la livraison de la commande
+	if (!$id_livraisonmode or !isset($choix_livraison[$id_livraisonmode])){
+		sql_delete("spip_commandes_details",$where);
+		return false;
+	}
 
-	$mode = sql_getfetsel("titre","spip_livraisonmodes","id_livraisonmode=".intval($id_livraisonmode));
-	include_spip('inc/texte');
-	$mode = typo($mode);
-	// et en inserer 1 si besoin
-	if (!$n){
+	$livraison = $choix_livraison[$id_livraisonmode];
+	$id_livraisonmodes = array_keys($livraison['decomposition']);
+
+	// enlever les modes de livraison dont on a pas besoin
+	sql_delete("spip_commandes_details",$where . ' AND '.sql_in('id_objet', $id_livraisonmodes, 'NOT'));
+
+	foreach($livraison['decomposition'] as $id_livraisonmode => $detailprix) {
+		$mode = sql_getfetsel("titre","spip_livraisonmodes","id_livraisonmode=".intval($id_livraisonmode));
+		include_spip('inc/texte');
+		$mode = typo($mode);
+		$id_commandes_detail = sql_getfetsel("id_commandes_detail","spip_commandes_details",$where . ' AND id_objet='.intval($id_livraisonmode),'');
 		$set = array(
 			'id_commande' => $id_commande,
 			'descriptif' => _T('livraison:info_livraison_par',array('mode'=>$mode)),
 			'quantite' => 1,
-			'prix_unitaire_ht' => 0,
-			'taxe' => 0,
+			'prix_unitaire_ht' => $detailprix['prix_ht'],
+			'taxe' => $detailprix['taxe'],
 			'objet' => 'livraisonmode',
 			'id_objet' => $id_livraisonmode,
 			'statut' => 'attente',
 		);
-		sql_insertq("spip_commandes_details",$set);
+		if (!$id_commandes_detail) {
+			sql_insertq("spip_commandes_details",$set);
+		}
+		else {
+			sql_updateq("spip_commandes_details",$set,'id_commandes_detail='.intval($id_commandes_detail));
+		}
 	}
-
-	// mettre a jour le prix du mode de livraison restant
-	$id_commandes_detail = sql_getfetsel("id_commandes_detail","spip_commandes_details",$where,'','id_commandes_detail','0,1');
-	$set = array(
-		'descriptif' => _T('livraison:info_livraison_par',array('mode'=>$mode)),
-		'quantite' => 1,
-		'prix_unitaire_ht' => reset($cout),
-		'taxe' => end($cout),
-		'statut' => 'attente',
-		'id_objet' => $id_livraisonmode,
-	);
-	sql_updateq("spip_commandes_details",$set,"id_commandes_detail=".intval($id_commandes_detail));
 
 	return true;
 }

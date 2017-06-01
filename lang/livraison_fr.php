@@ -22,7 +22,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	'bouton_modifier_adresse' => 'Modifier l\'adresse',
 	'bouton_modifier_adresses' => 'Modifier les adresses',
-	'bouton_choix_mode' => 'Choisir la livraison par @mode@ pour @prix@',
+	'bouton_choix_mode' => 'Choisir ce mode de livraison pour @prix@',
 	'bouton_suite' => 'Suite',
 
 	'info_adresse_enregistree' => 'Votre adresse a bien été mise à jour',
