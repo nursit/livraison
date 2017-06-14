@@ -46,7 +46,8 @@ function livraison_affiche_milieu($flux) {
 	// livres sur les produits et offres abonnement
 	if (!$e['edition']
 		and $table = $e['table_objet_sql']
-		and $primary = $e['id_table_objet'] ) {
+		and $primary = $e['id_table_objet']
+	  and $id = intval($flux['args'][$primary])) {
 		$objet = sql_fetsel("*",$table,"$primary=".$flux['args'][$primary]);
 		// si l'objet est livrable (pas immateriel) proposer le choix des modes de livraison
 		if (isset($objet['immateriel']) and !$objet['immateriel']){
