@@ -3,7 +3,7 @@
 	categorie="divers"
 	version="2.6.2"
 	etat="test"
-	compatibilite="[3.0.0;3.1.*]"
+	compatibilite="[3.0.0;3.2.*]"
 	logo="prive/themes/spip/images/livraison-32.png"
 	documentation=""
 	schema="1.4.0"
