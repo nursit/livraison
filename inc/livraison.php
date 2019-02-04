@@ -123,6 +123,8 @@ function livraison_calculer_cout($id_commande,$id_livraisonmode,$pays,$code_post
 	$taxe = 0;
 
 	// verifier que le mode est applicable a toutes les lignes de la commande
+	// ou au moins a certaines lignes si on accepte un mode de livraison partiel
+	$partiellement_applicable = false;
 	foreach($details as $k => $detail){
 		// si on a fourni une liste $partiel des details a livrer,
 		// on accepte une livraison partielle en renvoyant la liste des id non livres
@@ -135,8 +137,14 @@ function livraison_calculer_cout($id_commande,$id_livraisonmode,$pays,$code_post
 				return false;
 			}
 		}
+		else {
+			$partiellement_applicable = true;
+		}
 	}
-
+	// si le mode ne s'applique a aucune ligne, on arrete la
+	if (!$partiellement_applicable){
+		return false;
+	}
 
 	if (strlen($mode['taxe'])) {
 		$taxe = floatval($mode['taxe']);
