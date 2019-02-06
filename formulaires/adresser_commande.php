@@ -99,6 +99,7 @@ function formulaires_adresser_commande_charger_dist($id_commande, $url_suite='',
 	$valeurs['_choix_livraisonmode'] = array();
 	include_spip('inc/livraison');
 	$valeurs['_livraison_necessaire'] = (commande_livraison_necessaire($id_commande)?' ':'');
+	$valeurs['_telephone_obligatoire'] = $valeurs['_livraison_necessaire'];
 
 	if (!$valeurs['modif'] AND $valeurs['_livraison_necessaire']) {
 		// trouver les modes de livraison dispo et leurs prix, en fonction de l'adresse
@@ -131,6 +132,7 @@ function formulaires_adresser_commande_verifier_dist($id_commande, $url_suite=''
 		return $erreurs;
 	}
 
+	$livraison_necessaire = commande_livraison_necessaire($id_commande);
 	$oblis = array(
 		'livraison_nom',
 		'livraison_adresse',
@@ -138,6 +140,9 @@ function formulaires_adresser_commande_verifier_dist($id_commande, $url_suite=''
 		'livraison_adresse_ville',
 		'livraison_adresse_pays'
 	);
+	if ($livraison_necessaire) {
+		$oblis[] = 'livraison_telephone';
+	}
 	if (_request('facturation_identique_livraison')!=='oui'){
 		$oblis[] = 'facturation_nom';
 		$oblis[] = 'facturation_adresse';

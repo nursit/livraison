@@ -43,6 +43,7 @@ and will never be disclosed to third parties. We do not practice the purchase, t
 	'erreur_livraison_adresse_cp_obligatoire' => 'You must fill in the postal code for delivery.',
 	'erreur_livraison_adresse_ville_obligatoire' => 'You must fill in the city for delivery.',
 	'erreur_livraison_adresse_pays_obligatoire' => 'You must fill in the country for delivery.',
+	'erreur_livraison_telephone_obligatoire' => 'You must fill in a phone number for delivery.',
 	'erreur_facturation_nom_obligatoire' => 'You must specify a name for the invoice.',
 	'erreur_facturation_adresse_obligatoire' => 'You must fill in the billing address.',
 	'erreur_facturation_adresse_cp_obligatoire' => 'You must fill in the zip code for the invoice.',
