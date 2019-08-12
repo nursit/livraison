@@ -69,4 +69,49 @@ function livraison_affiche_milieu($flux) {
 	return $flux;
 }
 
+/**
+ * Renseigner les infos de facturation liee a une commande
+ * @param array $flux
+ * @return array mixed
+ */
+function livraison_bank_dsp2_renseigner_facturation($flux) {
 
+	if (isset($flux['args']['id_transaction'])
+		and $id_transaction = intval($flux['args']['id_transaction'])
+		and isset($flux['args']['id_commande'])
+		and $id_commande = intval($flux['args']['id_commande']) ) {
+
+		$commande = sql_fetsel("*", "spip_commandes", "id_commande=".intval($id_commande));
+		if ($commande) {
+			$quoi = '';
+			if (isset($commande['facturation_nom']) and $commande['facturation_nom']) {
+				$quoi = 'facturation';
+			}
+			elseif (isset($commande['livraison_nom']) and $commande['livraison_nom']) {
+				$quoi = 'livraison';
+			}
+			if ($quoi) {
+				if ($commande[$quoi.'_nom']) {
+					$flux['data']['nom'] = $commande[$quoi.'_nom'];
+				}
+				if ($commande[$quoi.'_adresse']) {
+					$flux['data']['adresse'] = $commande[$quoi.'_adresse'];
+				}
+				if ($commande[$quoi.'_societe']) {
+					$flux['data']['adresse'] = trim($commande[$quoi.'_societe'] . "\n" . $flux['data']['adresse']);
+				}
+				if ($commande[$quoi.'_adresse_cp']) {
+					$flux['data']['code_postal'] = $commande[$quoi.'_adresse_cp'];
+				}
+				if ($commande[$quoi.'_adresse_ville']) {
+					$flux['data']['ville'] = $commande[$quoi.'_adresse_ville'];
+				}
+				if ($commande[$quoi.'_adresse_pays']) {
+					$flux['data']['pays'] = $commande[$quoi.'_adresse_pays'];
+				}
+			}
+		}
+
+	}
+	return $flux;
+}

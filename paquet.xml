@@ -1,7 +1,7 @@
 <paquet
 	prefix="livraison"
 	categorie="divers"
-	version="2.6.4"
+	version="2.7.0"
 	etat="test"
 	compatibilite="[3.0.0;3.2.*]"
 	logo="prive/themes/spip/images/livraison-32.png"
@@ -21,6 +21,7 @@
 	<pipeline nom="autoriser" inclure="livraison_autorisations.php" /> 
 	<pipeline nom="afficher_contenu_objet" inclure="livraison_pipelines.php" />
 	<pipeline nom="affiche_milieu" inclure="livraison_pipelines.php" />
+	<pipeline nom="bank_dsp2_renseigner_facturation" inclure="livraison_pipelines.php" />
 
 	<pipeline nom="declarer_tables_objets_sql" inclure="base/livraison.php" /> 
 	<pipeline nom="declarer_tables_interfaces" inclure="base/livraison.php" /> 
