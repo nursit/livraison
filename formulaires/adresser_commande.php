@@ -131,7 +131,7 @@ function formulaires_adresser_commande_verifier_dist($id_commande, $url_suite=''
 		set_request('facturation_identique_livraison');
 		return $erreurs;
 	}
-    
+
     include_spip('inc/livraison');
 	$livraison_necessaire = commande_livraison_necessaire($id_commande);
 
@@ -170,7 +170,7 @@ function formulaires_adresser_commande_verifier_dist($id_commande, $url_suite=''
 	}
 
 	// TODO : verifier la validite du CP et du pays ?
-    var_dump($erreurs);
+    
 	return $erreurs;
 }
 
