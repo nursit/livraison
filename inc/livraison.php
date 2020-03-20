@@ -370,9 +370,13 @@ function commande_trouver_livraisons_possibles($id_commande, $pays, $code_postal
  * @param int $id_commande
  * @param int $id_livraisonmode
  *   si pas fourni on reprend celui deja existant pour une mise a jour du cout
+ * @param array $options
+ *   Tableau d'options pour indiquer pays et cp au lieu de prendre ceux dans la commande
+ *   - code_postal
+ *   - code_pays
  * @return bool
  */
-function fixer_livraison_commande($id_commande, $id_livraisonmode=0){
+function fixer_livraison_commande($id_commande, $id_livraisonmode=0, $options){
 	$where = "id_commande=".intval($id_commande)." AND objet=".sql_quote('livraisonmode');
 
 	if (!$id_commande
@@ -380,13 +384,22 @@ function fixer_livraison_commande($id_commande, $id_livraisonmode=0){
 		return false;
 	}
 
-	if ($commande['livraison_nom']) {
-		$pays = $commande['livraison_adresse_pays'];
-		$cp = $commande['livraison_adresse_cp'];
-	}
-	else {
-		$pays = $commande['facturation_adresse_pays'];
-		$cp = $commande['facturation_adresse_cp'];
+	// Soit on a le pays et le code postal dans les options,
+	// soit on les récupère dans la commande
+	if (
+		!isset($options['code_pays'])
+		and !isset($options['code_postal'])
+	) {
+		if ($commande['livraison_nom']) {
+			$pays = $commande['livraison_adresse_pays'];
+			$cp   = $commande['livraison_adresse_cp'];
+		} else {
+			$pays = $commande['facturation_adresse_pays'];
+			$cp   = $commande['facturation_adresse_cp'];
+		}
+	} else {
+		$pays = $options['code_pays'];
+		$cp   = $options['code_postal'];
 	}
 
 	$choix_livraison = commande_trouver_livraisons_possibles($id_commande, $pays, $cp);
