@@ -25,7 +25,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
  * @param string $redirect
  * @param array $options
  *     Tableau d'options :
- *     - code_pays
+ *     - pays
  *     - code_postal
  *     - titre_suite : intitulé du bouton pour continuer
  * @return void
@@ -47,7 +47,7 @@ function formulaires_choisir_livraisonmode_commande_charger_dist($id_commande, $
 	// TODO : faire appel à une fonction générique mutualisée avec le formulaire dans adresser_commande ?
 	// Complément à renseigner_adresse_auteur() → renseigner_adresse_commande() ?
 	// Ou alors encore plus générique : renseigner_adresse_objet() ?
-	$code_pays = (!empty($options['code_pays']) ? $options['code_pays'] : null);
+	$code_pays = (!empty($options['pays']) ? $options['pays'] : null);
 	$code_postal = (!empty($options['code_postal']) ? $options['code_postal'] : null);
 	if (!$code_pays or !$code_postal) {
 		return false;
