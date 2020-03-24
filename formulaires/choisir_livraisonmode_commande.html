@@ -1,0 +1,47 @@
+<div class='formulaire_spip formulaire_editer formulaire_#FORM formulaire_#FORM-#ENV{id_commande,nouveau}'>
+
+	[<p class="reponse_formulaire reponse_formulaire_ok">(#ENV**{message_ok})</p>]
+	[<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
+
+	<BOUCLE_editable(CONDITION) {si #ENV{editable}}>
+	<form method='post' action='#ENV{action}'><div>
+		#ACTION_FORMULAIRE{#ENV{action}}
+
+		[(#REM) Sans livraison nécessaire, un message + lien pour étape suivante ]
+		<BOUCLE_sans_livraison(CONDITION) {si #ENV{_livraison_necessaire}|non}>
+		<p class="message message_info">Pas de livraison nécessaire</p>
+		<div class="boutons">
+			<a class="btn btn-primary btn-large pull-right"
+				href="#ENV{_url_suite}">
+				[(#ENV{_titre_suite,<:livraison:bouton_suite:>})] <i class="icon-chevron-right icon-white"></i>
+			</a>
+		</div>
+		</BOUCLE_sans_livraison>
+
+		[(#REM) Choix du mode de livraison ]
+		<B_choix_modes>
+		<div class="liste livraisonmodes long">
+			<h3><span><:livraison:titre_votre_mode_de_livraison:></span></h3>
+			<ul class="liste-items">
+			<BOUCLE_choix_modes(POUR) {tableau #ENV{_choix_livraisonmode}}>
+			<li class="item">
+				<INCLURE{fond=formulaires/inc-choisir-livraisonmode,
+					id=#VALEUR{id},
+					prix_ht=#VALEUR{prix_ht},
+					prix=#VALEUR{prix_ttc},
+					titre=#VALEUR{titre},
+					decomposition=#VALEUR{decomposition},
+					env}
+				>
+			</li>
+			</BOUCLE_choix_modes>
+			</ul>
+		</div>
+		</B_choix_modes>
+		<//B_sans_livraison>
+
+		[(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]
+		<!--extra-->
+	</div></form>
+	</BOUCLE_editable>
+</div>
