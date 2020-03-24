@@ -24,24 +24,15 @@
 			<h3><span><:livraison:titre_votre_mode_de_livraison:></span></h3>
 			<ul class="liste-items">
 			<BOUCLE_choix_modes(POUR) {tableau #ENV{_choix_livraisonmode}}>
-			#SET{prix,#VALEUR{prix_ttc}|affiche_monnaie}
 			<li class="item">
-				<div class="entry">
-					<BOUCLE_modes(LIVRAISONMODES) {id_livraisonmode IN #VALEUR{id}|explode{','}} {par num titre,titre}>
-					<strong class="entry-title">
-						[(#LOGO_LIVRAISONMODE|image_reduire{-1})]
-						<span>[(#TITRE)][ (#_choix_modes:VALEUR{decomposition/#ID_LIVRAISONMODE/prix_ttc}|affiche_monnaie)]</span>
-					</strong>
-					[<div class="entry-content">
-						(#DESCRIPTIF)
-					</div>]
-					</BOUCLE_modes>
-					<div class="postmeta p">
-						<button type="submit" class="btn btn-primary" name="choixmode[#VALEUR{id}]" value="#VALEUR{id}">
-							<:livraison:bouton_choix_mode{mode=#VALEUR{titre},prix=#GET{prix}}:>
-						</button>
-					</div>
-				</div>
+				<INCLURE{fond=formulaires/inc-choisir-livraisonmode,
+					id=#VALEUR{id},
+					prix_ht=#VALEUR{prix_ht},
+					prix=#VALEUR{prix_ttc},
+					titre=#VALEUR{titre},
+					decomposition=#VALEUR{decomposition},
+					env}
+				>
 			</li>
 			</BOUCLE_choix_modes>
 			</ul>

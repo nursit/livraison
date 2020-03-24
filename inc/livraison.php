@@ -376,7 +376,7 @@ function commande_trouver_livraisons_possibles($id_commande, $pays, $code_postal
  *   - pays
  * @return bool
  */
-function fixer_livraison_commande($id_commande, $id_livraisonmode=0, $options){
+function fixer_livraison_commande($id_commande, $id_livraisonmode=0, $options = array()){
 	$where = "id_commande=".intval($id_commande)." AND objet=".sql_quote('livraisonmode');
 
 	if (!$id_commande
