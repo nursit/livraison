@@ -373,7 +373,7 @@ function commande_trouver_livraisons_possibles($id_commande, $pays, $code_postal
  * @param array $options
  *   Tableau d'options pour indiquer pays et cp au lieu de prendre ceux dans la commande
  *   - code_postal
- *   - code_pays
+ *   - pays
  * @return bool
  */
 function fixer_livraison_commande($id_commande, $id_livraisonmode=0, $options){
@@ -387,7 +387,7 @@ function fixer_livraison_commande($id_commande, $id_livraisonmode=0, $options){
 	// Soit on a le pays et le code postal dans les options,
 	// soit on les récupère dans la commande
 	if (
-		!isset($options['code_pays'])
+		!isset($options['pays'])
 		and !isset($options['code_postal'])
 	) {
 		if ($commande['livraison_nom']) {
@@ -398,7 +398,7 @@ function fixer_livraison_commande($id_commande, $id_livraisonmode=0, $options){
 			$cp   = $commande['facturation_adresse_cp'];
 		}
 	} else {
-		$pays = $options['code_pays'];
+		$pays = $options['pays'];
 		$cp   = $options['code_postal'];
 	}
 
