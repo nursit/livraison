@@ -43,10 +43,6 @@ function formulaires_choisir_livraisonmode_commande_charger_dist($id_commande, $
 	include_spip('inc/livraison');
 
 	// Infos de livraison pour la commande : pays et code postal.
-	// Pour l'instant c'est à passer dans les options.
-	// TODO : faire appel à une fonction générique mutualisée avec le formulaire dans adresser_commande ?
-	// Complément à renseigner_adresse_auteur() → renseigner_adresse_commande() ?
-	// Ou alors encore plus générique : renseigner_adresse_objet() ?
 	$code_pays = (!empty($options['pays']) ? $options['pays'] : null);
 	$code_postal = (!empty($options['code_postal']) ? $options['code_postal'] : null);
 	if (!$code_pays or !$code_postal) {
