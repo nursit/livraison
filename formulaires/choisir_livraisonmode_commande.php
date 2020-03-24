@@ -30,7 +30,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
  *     - titre_suite : intitulé du bouton pour continuer
  * @return void
  */
-function formulaires_choisir_livraisonmode_commande_charger_dist($id_commande, $redirect = '', $options = array()){
+function formulaires_choisir_livraisonmode_commande_charger_dist($id_commande, $redirect = '', $options = array()) {
 
 	// Il faut avoir une commande en cours
 	if (
@@ -42,16 +42,30 @@ function formulaires_choisir_livraisonmode_commande_charger_dist($id_commande, $
 
 	include_spip('inc/livraison');
 
-	// Infos de livraison pour la commande : pays et code postal.
-	$code_pays = (!empty($options['pays']) ? $options['pays'] : null);
-	$code_postal = (!empty($options['code_postal']) ? $options['code_postal'] : null);
-	if (!$code_pays or !$code_postal) {
+	// Soit on a le pays et le code postal dans les options,
+	// soit on les récupère dans la commande
+	if (
+		!isset($options['pays'])
+		and !isset($options['code_postal'])
+	) {
+		if ($commande['livraison_nom']) {
+			$pays        = $commande['livraison_adresse_pays'];
+			$code_postal = $commande['livraison_adresse_cp'];
+		} else {
+			$pays        = $commande['facturation_adresse_pays'];
+			$code_postal = $commande['facturation_adresse_cp'];
+		}
+	} else {
+		$pays        = $options['pays'];
+		$code_postal = $options['code_postal'];
+	}
+	if (!$pays or !$code_postal) {
 		return false;
 	}
 
 	// Trouver les modes de livraison dispos et leurs prix en fonction de l'adresse
 	if ($livraison_necessaire = commande_livraison_necessaire($id_commande)) {
-		$choix_livraisonmode = commande_trouver_livraisons_possibles($id_commande, $code_pays, $code_postal);
+		$choix_livraisonmode = commande_trouver_livraisons_possibles($id_commande, $pays, $code_postal);
 	}
 
 	// Pas de mode de livraison, pas de chocolat
@@ -70,7 +84,7 @@ function formulaires_choisir_livraisonmode_commande_charger_dist($id_commande, $
 	}
 
 	// Gestion du cache
-	$valeurs['_hash'] = md5(serialize(sql_allfetsel("id_commandes_detail,prix_unitaire_ht,taxe,objet,id_objet,quantite","spip_commandes_details","id_commande=".intval($id_commande))));
+	$valeurs['_hash'] = md5(serialize(sql_allfetsel('id_commandes_detail,prix_unitaire_ht,taxe,objet,id_objet,quantite', 'spip_commandes_details', 'id_commande='.intval($id_commande))));
 
 	return $valeurs;
 }
@@ -87,7 +101,7 @@ function formulaires_choisir_livraisonmode_commande_charger_dist($id_commande, $
  *     - titre_suite : intitulé du bouton pour continuer
  * @return void
  */
-function formulaires_choisir_livraisonmode_commande_verifier_dist($id_commande, $redirect = '', $options = array()){
+function formulaires_choisir_livraisonmode_commande_verifier_dist($id_commande, $redirect = '', $options = array()) {
 	$erreurs = array();
 	return $erreurs;
 }
@@ -104,7 +118,7 @@ function formulaires_choisir_livraisonmode_commande_verifier_dist($id_commande, 
  *     - titre_suite : intitulé du bouton pour continuer
  * @return void
  */
-function formulaires_choisir_livraisonmode_commande_traiter_dist($id_commande, $redirect = '', $options = array()){
+function formulaires_choisir_livraisonmode_commande_traiter_dist($id_commande, $redirect = '', $options = array()) {
 
 	$res = array();
 
