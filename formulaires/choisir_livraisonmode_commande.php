@@ -122,6 +122,8 @@ function formulaires_choisir_livraisonmode_commande_traiter_dist($id_commande, $
 	}
 
 	if ($redirect) {
+		include_spip('inc/filtres');
+		$redirect = parametre_url($redirect, 'id_livraisonmode', $choixmode);
 		$res['redirect'] = $redirect;
 	}
 
