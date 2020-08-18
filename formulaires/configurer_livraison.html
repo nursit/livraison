@@ -9,6 +9,13 @@
 	<div>
 		#ACTION_FORMULAIRE{#ENV{action}}
 
+		[(#SAISIE{
+			case,
+			telephone_obligatoire,
+			label=Téléphone obligatoire ?,
+			explication=Le client doit il founir un numéro de teléphone
+		})]
+
 		<input type="hidden" name="_meta_casier" value="livraison" />
 		<p class="boutons"><span class="image_loading">&nbsp;</span><input type="submit" class="submit" value="<:bouton_enregistrer:>" /></p>
 	</div>
